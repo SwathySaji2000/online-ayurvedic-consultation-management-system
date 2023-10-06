@@ -1,0 +1,161 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>Medi</title>
+
+  <!-- slider stylesheet -->
+  <link rel="stylesheet" type="text/css"
+    href="{% static '/https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css' %}" />
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.css' %}" />
+
+  <!-- Custom styles for this template -->
+  <link href="{% static '/css/style.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static '/css/responsive.css' %}" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
+          <a class="navbar-brand" href="index.html">
+            <img src="{% static '/images/logo.png' %}" alt="" />
+            <span>
+              Herbal
+            </span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
+              <ul class="navbar-nav  ">
+                <li class="nav-item active">
+                  <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="about.html"> About </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Treatment.html"> Treatment </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Product.html"> Product </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Contact.html">Contact us</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url "login" %}">Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url "register" %}">Register</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.5.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.2/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <title>Login Form</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        font-family: 'Jost', sans-serif;
+        background-position: center;
+        background-repeat: no-repeat;
+        
+    }
+
+    .main {
+        width: 100%; /* Set the width to 100% to cover the entire viewport width */
+        height: 100vh;
+ no-repeat/cover;
+        overflow: hidden;
+        background-size: cover;
+        border-radius: 10px;
+        box-shadow: 5px 20px 50px #000;
+    }
+
+    .form-container {
+        background-image: url("{% static 'images/fe.jpeg' %}");
+        background-size: 400px, 200px;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 10px; /* Add padding to the form container */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    .input-container input {
+        width: 90%; /* Set the width to 100% to expand the input fields */
+        padding: 10px; /* Add padding to the input fields */
+        margin-bottom: 10px; /* Add margin to create spacing between input fields */
+    }
+</style>
+
+	
+	</style>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="right-side">
+          <div class="image-container">
+             <!--<img class="background-image" src="{% static 'images/ayy.jpeg' %}" alt="Background Image">-->
+          </div>
+      </div>
+        <div class="login-container">
+            <div class="center-side">
+                <div class="form-container">
+                    <div class="title">
+                        <h1>LOGIN</h1>
+                    </div>
+                    <div class="input-container">
+                        <input type="text" placeholder="EMAIL" name="username"><br>
+                        <input type="password" placeholder="PASSWORD" name="password"><br>
+                        <button><b>LOGIN</b></button><br><br>
+                        <p class="forgot-password"><a href="{% url 'password_reset' %}">Forgot Password?</a></p><br>
+                        <p class="signup">Don't have an account? <a href="/register">Register</a></p><br>
+                        <button class="google-login-button"><b>CONTINUE WITH GOOGLE</b></button>
+                        
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </form>
+</body>
+</html>
