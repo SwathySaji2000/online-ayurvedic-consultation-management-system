@@ -1,0 +1,549 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+   
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"><head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>Medi</title>
+
+  <!-- slider stylesheet -->
+  <link rel="stylesheet" type="text/css"
+    href="{% static '/https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css' %}" />
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.css' %}" />
+
+  <!-- Custom styles for this template -->
+  <link href="{% static '/css/style.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static '/css/responsive.css' %}" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
+          <a class="navbar-brand" href="index.html">
+            <img src="{% static '/images/logo.png' %}" alt="" />
+            <span>
+              Herbal
+            </span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
+              <ul class="navbar-nav  ">
+                <li class="nav-item active">
+                  <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="about.html"> About </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Treatment.html"> Treatment </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Product.html"> Product </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Contact.html">Contact us</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url "login" %}">Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url "register" %}">Register</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->{% load static %}
+ <style>
+    body {
+        margin: 0;
+        padding: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        font-family: 'Jost', sans-serif;
+        background-position: center;
+        background-repeat: no-repeat;
+        <!--background: linear-gradient(to bottom, #0f0c29, #486610, #243e2b);-->
+    }
+
+    .main {
+        width: 100%; /* Set the width to 100% to cover the entire viewport width */
+        height: 100vh;
+
+        background-image: url("images/lo.jpeg") no-repeat/cover;
+        overflow: hidden;
+        background-size: cover;
+        border-radius: 10px;
+        box-shadow: 5px 20px 50px #000;
+    }
+
+    .form-container {
+        background-image: url("{% static 'images/lo.jpeg' %}");
+        background-size: 400px, 200px;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 10px; /* Add padding to the form container */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    .input-container input {
+        width: 90%; /* Set the width to 100% to expand the input fields */
+        padding: 10px; /* Add padding to the input fields */
+        margin-bottom: 10px; /* Add margin to create spacing between input fields */
+    }
+</style>
+</head>
+<body>
+    <form method="POST" action="" onsubmit="return validateForm()">
+        {% csrf_token %}
+        <div class="right-side">
+            <div class="image-container">
+                <!-- <img class="background-image" src="{% static 'images/lo.jpeg' %}" alt="Background Image"> -->
+            </div>
+        </div>
+        <div class="login-container">
+            <div class="center-side">
+                <div class="form-container">
+                    <div class="title">
+                        <h1>REGISTRATION</h1>
+                    </div>
+                    <div class="input-container">
+                        <input type="text" placeholder="Fullname" name="fullName" id="fullName" oninput="validateFullName()" required>
+                        <span id="fullNameError" class="error"></span>
+                        <br>
+                        <input type="email" placeholder="Email" name="email" id="email" class="input-box" oninput="validateEmail()" required>
+                        <span id="emailError" class="error"></span>
+                        <br>
+                        <input type="tel" placeholder="Phone" name="phone" id="phone" class="input-box" oninput="validatePhone()" required>
+                        <span id="phoneError" class="error"></span>
+                        <br>
+                        <input type="password" placeholder="Password" name="password" id="password" oninput="validatePassword()" required>
+                        <span id="passwordError" class="error"></span>
+                        <br>
+                        <input type="password" placeholder="Confirm Password" name="confirmPassword" oninput="validateConfirmPassword()">
+                        <span id="confirmPasswordError" class="error"></span>
+                        <br>
+                        <a href="{% url "login" %}"><button type="submit">REGISTER</button></a><br>
+                        <p>Already have an account? <a href="/login">Login</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script>
+        // JavaScript validation functions
+
+        // Fullname validation
+        function validateFullName() {
+            const fullNameInput = document.getElementById('fullName');
+            const fullNameError = document.getElementById('fullNameError');
+            const fullNamePattern = /^[A-Z][a-z]*$/;
+
+            if (!fullNamePattern.test(fullNameInput.value)) {
+                fullNameError.textContent = 'Fullname must start with an uppercase letter and contain only letters.';
+            } else {
+                fullNameError.textContent = '';
+            }
+        }
+
+        // Email validation
+        function validateEmail() {
+            const emailInput = document.getElementById('email');
+            const emailError = document.getElementById('emailError');
+            const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+
+            if (!emailPattern.test(emailInput.value)) {
+                emailError.textContent = 'Invalid email format.';
+            } else {
+                emailError.textContent = '';
+            }
+        }
+
+        // Phone validation
+        function validatePhone() {
+            const phoneInput = document.getElementById('phone');
+            const phoneError = document.getElementById('phoneError');
+            const phonePattern = /^[1-9]\d{9}$/;
+
+            if (!phonePattern.test(phoneInput.value)) {
+                phoneError.textContent = 'Phone number must be 10 digits and cannot start with 0.';
+            } else {
+                phoneError.textContent = '';
+            }
+        }
+
+        // Password validation
+        function validatePassword() {
+            const passwordInput = document.getElementById('password');
+            const passwordError = document.getElementById('passwordError');
+            const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+
+            if (!passwordPattern.test(passwordInput.value)) {
+                passwordError.textContent = 'Password must contain at least one uppercase letter, one digit, and one special character (!@#$%^&*).';
+            } else {
+                passwordError.textContent = '';
+            }
+        }
+
+        // Confirm Password validation
+        function validateConfirmPassword() {
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const confirmPasswordError = document.getElementById('confirmPasswordError');
+
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                confirmPasswordError.textContent = 'Passwords do not match.';
+            } else {
+                confirmPasswordError.textContent = '';
+            }
+        }
+
+        // Form submission validation
+        function validateForm() {
+            // You can add additional validation logic here if needed
+            // For example, check if all error messages are empty before submitting
+            return true; // Return true to allow form submission or false to prevent it
+        }
+    </script>
+   {% comment %} <script>
+      // Function to validate Fullname
+      function validateFullName() {
+          const fullNameInput = document.getElementById("fullName");
+          const fullNameError = document.getElementById("fullNameError");
+          const fullNameValue = fullNameInput.value.trim();
+  
+          if (fullNameValue === "") {
+              fullNameError.textContent = "fullName is required.";
+              fullNameInput.classList.add("error-input");
+          } else {
+              fullNameError.textContent = "";
+              fullNameInput.classList.remove("error-input");
+              if(username==null || username=="")
+        {
+            document.getElementById('up').innerHTML="Username can't be null"
+            btn.disabled=true;
+
+        }
+        else if(username.length<4)
+        {
+            document.getElementById('up').innerHTML='Username must be at least 4 characters long';
+            btn.disabled=true;
+            m.disabled=true;
+            phone.disabled=true;
+            //address.disabled=true;
+            password.disabled=true;
+            cpassword.disabled=true;
+        }
+        else if
+    
+        {
+            
+        ((username.replace(/[^0-9]/g,"").length) > ((username.length)-3))
+        {
+            document.getElementById('up').innerHTML='Username must contains at least 3 alphebets';
+            btn.disabled=true;
+            m.disabled=true;
+            phone.disabled=true;
+            //address.disabled=true;
+            password.disabled=true;
+            cpassword.disabled=true;
+        }
+        else if(username.length>3 && username.length<16)
+        {
+            document.getElementById('up').innerHTML="";
+            btn.disabled=false;
+            m.disabled=false;
+            phone.disabled=false;
+            //address.disabled=false;
+            password.disabled=false;
+            cpassword.disabled=false;
+        }
+        else if(username.length >15)
+        {
+            document.getElementById('up').innerHTML = 'Username must be less than 15 characters'; // Clear the error message
+            btn.disabled=true;
+            m.disabled=true;
+            phone.disabled=true;
+            //address.disabled=true;
+            password.disabled=true;
+            cpassword.disabled=true;
+        }
+    }
+          }
+      }
+  
+      // Function to validate Email
+      function validateEmail() {
+          const emailInput = document.getElementById("email");
+          const emailError = document.getElementById("emailError");
+          const emailValue = emailInput.value.trim();
+          function validatePasswordStrength(password) {
+            const passwordStrengthPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+            return passwordStrengthPattern.test(password);
+        }
+        function validatePasswordStrength(password) {
+            const passwordStrengthPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+            return passwordStrengthPattern.test(password);
+        }
+        
+        function validateForm() {
+            validateFullName();
+            validateEmail();
+            validatePhone();
+            validatePassword();
+            validateConfirmPassword();
+            
+            const passwordInput = document.getElementById("password");
+            const passwordValue = passwordInput.value;
+            
+            // Check password strength
+            if (!validatePasswordStrength(passwordValue)) {
+                const passwordError = document.getElementById("passwordError");
+                passwordError.textContent = "Password must contain at least one uppercase letter, one lowercase letter, one number, one special character, and be at least 6 characters long.";
+                passwordInput.classList.add("error-input");
+            }
+        
+            // Return false to prevent form submission if there are errors
+            const errorInputs = document.querySelectorAll(".error-input");
+            if (errorInputs.length > 0) {
+                return false;
+            }
+            return true;
+        }
+        
+        
+  
+          // Regular expression for basic email validation
+          const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  
+          if (!emailPattern.test(emailValue)) {
+              emailError.textContent = "Invalid email address.";
+              emailInput.classList.add("error-input");
+          } else {
+              emailError.textContent = "";
+              emailInput.classList.remove("error-input");
+          }
+      }
+  
+      // Function to validate Phone
+      function validatePhone() {
+          const phoneInput = document.getElementById("phone");
+          const phoneError = document.getElementById("phoneError");
+          const phoneValue = phoneInput.value.trim();
+  
+          // Regular expression for basic phone number validation
+          const phonePattern = /^\d{10}$/;
+  
+          if (!phonePattern.test(phoneValue)) {
+              phoneError.textContent = "Invalid phone number. Use 10 digits.";
+              phoneInput.classList.add("error-input");
+          } else {
+              phoneError.textContent = "";
+              phoneInput.classList.remove("error-input");
+       
+              const btn=document.getElementById('btn');
+              var lower=/^(?=.*[a-z])/
+              var upper=/(?=.*[A-Z])/
+              var num=/^(?=.*[0-9])/     }
+      }
+
+  
+      // Function to validate Password
+      function validatePassword() {
+          const passwordInput = document.getElementById("password");
+          const passwordError = document.getElementById("passwordError");
+          const passwordValue = passwordInput.value;
+  
+          if (passwordValue.length < 6) {
+              passwordError.textContent = "Password must be at least 6 characters.";
+              passwordInput.classList.add("error-input");
+          } else {
+              passwordError.textContent = "";
+              passwordInput.classList.remove("error-input");
+          }
+      }
+  
+      // Function to validate Confirm Password
+      function validateConfirmPassword() {
+          const passwordInput = document.getElementById("password");
+          const confirmPasswordInput = document.getElementById("confirmPassword");
+          const confirmPasswordError = document.getElementById("confirmPasswordError");
+          const confirmPasswordValue = confirmPasswordInput.value;
+  
+          if (passwordInput.value !== confirmPasswordValue) {
+              confirmPasswordError.textContent = "Passwords do not match.";
+              confirmPasswordInput.classList.add("error-input");
+          } else {
+              confirmPasswordError.textContent = "";
+              confirmPasswordInput.classList.remove("error-input");
+          }
+      }
+  
+      // Function to validate the entire form before submission
+      function validateForm() {
+          validateFullName();
+          validateEmail();
+          validatePhone();
+          validatePassword();
+          validateConfirmPassword();
+  
+          // Return false to prevent form submission if there are errors
+          const errorInputs = document.querySelectorAll(".error-input");
+          if (errorInputs.length > 0) {
+              return false;
+          }
+          return true;
+      }
+  </script> {% endcomment %}
+ <!-- <script>
+    function usernameval()
+    {
+        //alert("enter user");
+        var username=document.getElementById('username').value;
+        var errorMessage=document.getElementById('up');
+
+        var m=document.getElementById('email');
+        var phone=document.getElementById('phone');
+        //var address=document.getElementById('address');
+        var password=document.getElementById('password');
+        var cpassword=document.getElementById('cpassword');
+
+        const btn=document.getElementById('btn');
+        if(username==null || username=="")
+        {
+            document.getElementById('up').innerHTML="Username can't be null"
+            btn.disabled=true;
+
+        }
+        else if(username.length<4)
+        {
+            document.getElementById('up').innerHTML='Username must be at least 4 characters long';
+            btn.disabled=true;
+            m.disabled=true;
+            phone.disabled=true;
+            //address.disabled=true;
+            password.disabled=true;
+            cpassword.disabled=true;
+        }
+        else if((username.replace(/[^0-9]/g,"").length) > ((username.length)-3))
+        {
+            document.getElementById('up').innerHTML='Username must contains at least 3 alphebets';
+            btn.disabled=true;
+            m.disabled=true;
+            phone.disabled=true;
+            //address.disabled=true;
+            password.disabled=true;
+            cpassword.disabled=true;
+        }
+        else if(username.length>3 && username.length<16)
+        {
+            document.getElementById('up').innerHTML="";
+            btn.disabled=false;
+            m.disabled=false;
+            phone.disabled=false;
+            //address.disabled=false;
+            password.disabled=false;
+            cpassword.disabled=false;
+        }
+        else if(username.length >15)
+        {
+            document.getElementById('up').innerHTML = 'Username must be less than 15 characters'; // Clear the error message
+            btn.disabled=true;
+            m.disabled=true;
+            phone.disabled=true;
+            //address.disabled=true;
+            password.disabled=true;
+            cpassword.disabled=true;
+        }
+    }
+    function mailval()
+    {
+        var m=document.getElementById('email').value;
+        var errorMessage = document.getElementById('ep');
+
+        var phone=document.getElementById('phone');
+        //var address=document.getElementById('address');
+        var password=document.getElementById('password');
+        var cpassword=document.getElementById('cpassword');
+
+        const btn=document.getElementById("btn");
+        var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
+        //alert(m);
+        if(m==null || m=="")
+        {
+            document.getElementById('ep').innerHTML="Enter the email id";
+            btn.disabled=true;
+            phone.disabled=true;
+            //address.disabled=true;
+            password.disabled=true;
+            cpassword.disabled=true;
+        }
+        else if(! regex.test(m))
+        {
+            document.getElementById('ep').innerHTML="Enter the email id format";
+            btn.disabled=true;
+            phone.disabled=true;
+            //address.disabled=true;
+            password.disabled=true;
+            cpassword.disabled=true;
+        }
+        else
+        {
+            document.getElementById('ep').innerHTML="";
+            btn.disabled=false;
+            phone.disabled=false;
+            //address.disabled=false;
+            password.disabled=false;
+            cpassword.disabled=false;
+        }
+    }
+    function phoneval()
+    {
+        var phone=document.getElementById('phone').value;
+        var errorMessage=document.getElementById('pp');
+
+        //var address=document.getElementById('address');
+        var password=document.getElementById('password');
+        var cpassword=document.getElementById('cpassword');
+        //alert("Enter");
+        const btn=document.getElementById('btn');
+        const reg=/^[6-9]\d{9}$/-->
+        
+</body>
+</html>
+
+
+
+    
+  
