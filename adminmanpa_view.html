@@ -1,0 +1,52 @@
+{% include 'admin_header.html' %}
+
+<style>
+  .center-align {
+    text-align: center;
+    margin-left: 300px;
+    
+  }
+
+  .card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  }
+</style>
+
+<div class="center-align">
+  <div class="card" style="width: 1200px;">
+    <form action="" method="post">
+      <table class="table table-striped">
+        <h2>View Patient Details</h2>
+        <tr>
+          <th>fullName</th>
+          <th>Age</th>
+          <th>Place</th>
+          <th>Gender</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Delete</th>
+          <th>Update</th>
+        </tr>
+
+        {% for i in docviews %}
+        <tr>
+          <td>{{i.fullName}}</td>
+          <td>{{i.age}}</td>
+          <td>{{i.place}}</td>
+          <td>{{i.gender}}</td>
+          <td>{{i.phone}}</td>
+          <td>{{i.email}}</td>
+          <td><a href="/delete_patient/{{i.LOGIN_id}}" class="btn btn-warning">Delete</a></td>
+          <!--<td><a href="/admin_update_doctor_details/{{i.id}}" class="btn btn-warning">Update</a></td>-->
+        </tr>
+        {% endfor %}
+      </table>
+    </form>
+  </div>
+</div>
+
+{% include 'admin_footer.html' %}
+ 

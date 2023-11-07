@@ -1,0 +1,66 @@
+{% include 'admin_header.html' %}
+<div style="margin-bottom: 1em; margin-top: 3em; background:url('/static/assets/img/k.png') ; height: 100px; width: 100%; background-size: cover;" >
+</div>
+<style>
+    /* Table CSS */
+    .center-align {
+    text-align: center
+    
+    
+  }
+</style>
+
+
+
+<div class="center-align">
+<form action="" method="post">
+
+    {% if doc_up %}
+
+    <table class="table" style="width: 700px;margin-left: 30em;" border="1px">
+        <h2>Update Doctors</h2>
+
+        <tr>
+            <th>Doctor Name</th>
+            <td><input type="text" id="sample" name="firstname" value="{{doc_up.Name}}"  pattern="[A-za-z ]+$" required class="form-control"></td>
+        </tr>
+        <tr>
+            <th>Specialization</th>
+            <td><input type="text" name="specialization" value="{{doc_up.specialization}}"  class="form-control" pattern="[A-za-z ]+$" required></td>
+        </tr>
+        <tr>
+            <th>place</th>
+            <td><input type="text" name="place" value="{{doc_up.place}}" class="form-control" pattern="[A-za-z ]+$" required></td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td><input type="text" name="phone" value="{{doc_up.phone}}" pattern="[0-9]{10}" required title="number format"  class="form-control"></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td><input type="email" name="email" value="{{doc_up.email}}" required class="form-control"></td>
+        </tr>
+            <th>dob</th>
+            <td><input type="date" id="dob" name="dob" value="{{doc_up.dob}}"  required class="form-control"></td>
+        </tr>
+    </tr>
+   <tr>
+    <th>Gender</th>
+    <td>
+        <select placeholder="gender" id="gender"  class="form-control" required name='genderxxx'>
+            <option value="other" >gender</option>
+            <option value="male" >Male</option>
+            <option value="female">Female</option>
+        </select>
+    </td>
+   </tr>
+
+
+        <tr>
+            <td align="center" colspan="2"><input type="submit" name="submit" value="Submit" class="btn btn-success" style="width: 150px;"></td>
+        </tr>
+    </table>
+    {% endif %}
+</form>
+</div>
+{% include 'admin_footer.html' %}

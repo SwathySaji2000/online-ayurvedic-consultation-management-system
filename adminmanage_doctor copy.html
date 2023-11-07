@@ -1,0 +1,118 @@
+{% load static %}
+{% include 'admin_header.html' %}
+<style>
+    /* Table CSS */
+    .center-align {
+    text-align: center;
+    margin-left: 2300px;
+    
+  }
+    .form-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #ccc;
+    }
+  
+    .form-table th {
+      background-color: #f2f2f2;
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+  
+    .form-table td {
+      border: 1px solid #ccc;
+      padding: 8px;
+    }
+  
+    /* Card CSS */
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 20px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      margin: 20px;
+    }
+  </style>
+  
+  <div class="center-align">
+    <form method="POST" action="" onsubmit="return validateForm()">
+      <div class="login-container">
+        <div class="card">
+          <table class="form-table">
+            <tr>
+              <td class="title" colspan="2">
+                <h1>REGISTRATION</h1>
+              </td>
+            </tr>
+            <tr>
+                <td><label for="Name">Name:</label></td>
+                <td>
+                  <input type="text" name="Name" id="Name" oninput="validateName()" required>
+                  <span id="NameError" class="error"></span>
+                </td>
+              </tr>
+              <tr>
+                <td><label for="DOB">DOB:</label></td>
+                <td>
+                  <input type="date" name="DOB" id="DOB" oninput="validateDOB()" required>
+                  <span id="DOBError" class="error"></span>
+                </td>
+              </tr>
+              <tr>
+                <td><label for="specialization">Specialization:</label></td>
+                <td>
+                  <input type="text" name="specialization" id="specialization" oninput="validatespecialization()" required>
+                  <span id="specializationError" class="error"></span>
+                </td>
+              </tr>
+              <tr>
+                <td><label for="email">Email:</label></td>
+                <td>
+                  <input type="email" name="email" id="email" class="input-box" oninput="validateEmail()" required>
+                  <span id="emailError" class="error"></span>
+                </td>
+              </tr>
+              <tr>
+                <td><label for="place">Place:</label></td>
+                <td>
+                  <input type="tel" name="place" id="place" class="input-box" oninput="validatePlace()" required>
+                  <span id="placeError" class="error"></span>
+                </td>
+              </tr>
+              <tr>
+                <td><label for="phone">Phone:</label></td>
+                <td>
+                  <input type="tel" name="phone" id="phone" class="input-box" oninput="validatePhone()" required>
+                  <span id="phoneError" class="error"></span>
+                </td>
+              </tr>
+              <tr>
+                <td><label for="gender">Gender:</label></td>
+                <td>
+                  <select id="gender" class="form-control" required name="genderxxx">
+                    <option value="other">Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <input type="password" name="password">
+                  <!-- <input type="password" placeholder="Password" name="password" id="password" oninput="validatePassword()" required>
+                  <span id="passwordError" class="error"></span> -->
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" class="submit-button">
+                  <input type="submit" name="add" value="REGISTER">
+                </td>
+              </tr>
+          </table>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+{%include 'admin_footer.html'%}

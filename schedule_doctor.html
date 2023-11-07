@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Schedule</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            background-color: #0099cc;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #0099cc;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Schedule</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Doctor</th>
+                <th>Time From</th>
+                <th>Time To</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for schedule in schedules %}
+                <tr>
+                    <td>{{ schedule.date }}</td>
+                    <td>{{ schedule.DOCTOR }}</td>
+                    <td>{{ schedule.timefrom }}</td>
+                    <td>{{ schedule.timeto }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">No schedules available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

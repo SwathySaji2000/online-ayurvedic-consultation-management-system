@@ -1,0 +1,106 @@
+{% load static %}
+{% include 'admin_header.html' %}
+
+<style>
+    .center-align {
+        text-align: center;
+        margin-left: 800px;
+        
+      }
+    body {
+        width: 100%;
+        margin: 0;
+        padding: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        font-family: 'Jost', sans-serif;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .main {
+        width: 100%;
+        height: 100vh;
+        background-image: url("images/lo.jpeg") no-repeat/cover;
+        overflow: hidden;
+        background-size: cover;
+        border-radius: 10px;
+        box-shadow: 5px 20px 50px #000;
+    }
+
+    .form-container {
+        background-size: 400px, 200px;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    .input-container input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    /* Your additional CSS code for the card view */
+    .card {
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+    }
+</style>
+<div class="center-align">
+    <form method="POST" action="" onsubmit="return validateForm()">
+        <div class="login-container">
+            <div class="center-side">
+                <div class="form-container card">
+                    <div class="title">
+                        <h1>REGISTRATION</h1>
+                    </div>
+                    <div class="input-container">
+                      <input type="text" placeholder="Name" name="Name" id="Name" oninput="validateName()" required>
+                      <span id="NameError" class="error"></span>
+                      <br>
+                      <input type="date" placeholder="DOB" name="DOB" id="DOB" oninput="validateDOB()" required>
+                      <span id="DOBError" class="error"></span>
+                      <br>
+                      <input type="text" placeholder="specialization" name="specialization" id="specialization" oninput="validatespecialization()" required>
+                      <span id="specializationError" class="error"></span>
+                      <br>
+                      <input type="email" placeholder="Email" name="email" id="email" class="input-box" oninput="validateEmail()" required>
+                      <span id="emailError" class="error"></span>
+                      <br>
+                      <input type="tel" placeholder="Place" name="place" id="place" class="input-box" oninput="validatePlace()" required>
+                      <span id="placeError" class="error"></span>
+                      <br>
+                      <input type="tel" placeholder="Phone" name="phone" id="phone" class="input-box" oninput="validatePhone()" required>
+                      <span id="phoneError" class="error"></span>
+                      <br>
+                      <!--<input type="age" placeholder="Age" name="age" id="age" class="input-box" oninput="validateAge()" required>
+                      <span id="AgeError" class="error"></span>-->
+                      <div style="width: 550px;padding-left: 30px;">
+                      <select placeholder="gender" id="gender"  class="form-control" required name='genderxxx'>
+                          <option value="other" >gender</option>
+                          <option value="male" >Male</option>
+                          <option value="female">Female</option>
+                      </select>
+                  </div>
+                  <br>
+                  <input type="password" name="password">
+                              <!-- <input type="password" placeholder="Password" name="password" id="password" oninput="validatePassword()" required>
+                              <span id="passwordError" class="error"></span> -->
+                              <br>
+                              <input type="submit" name="add" value="REGISTER"><br>
+                          </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% include 'admin_footer.html' %}
