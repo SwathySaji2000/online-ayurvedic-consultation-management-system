@@ -1,0 +1,95 @@
+<!-- display_schedule.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Schedule</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h3 class="mb-4">My Schedule</h3>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <!-- <th>ID</th> -->
+                    <th>Date</th>
+                    <th>Time From</th>
+                    <th>Time To</th>
+                    <th>Appointment</th>
+               </tr>
+            </thead>
+            <tbody>
+                {% for entry in slots %}
+                    <form method="post" >
+                        {% comment %} {% csrf_token %} {% endcomment %}
+                        <!-- <input type="hidden" name="schedule_id" value="{{ entry.id }}"> -->
+                        <input type="hidden" name="date" value="{{ entry.date }}">
+                        <input type="hidden" name="timefrom" value="{{ entry.timefrom }}">
+                        <input type="hidden" name="timeto" value="{{ entry.timeto }}">
+                        <tr>
+                            <!-- <td>{{ entry.id }}</td> -->
+                            <td>{{ entry.date }}</td>
+                            <td>{{ entry.timefrom }}</td>
+                            <td>{{ entry.timeto }}</td>
+                            <!-- <td>{{ entry.DOCTOR.id}}</td> -->
+                            <td>
+
+                               <a href="/booking_doctor/{{entry.id}}" class="btn btn-warning">Appointment</a>
+
+                            </td>
+                        </tr>
+                    </form>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    function validateForm() {
+        const id = document.getElementById('idInput').value;
+        const date = document.getElementById('dateInput').value;
+        const timeFrom = document.getElementById('timeFromInput').value;
+        const timeTo = document.getElementById('timeToInput').value;
+        const appointmentType = document.getElementById('appointmentType').value;
+      
+        // Validate ID (checking if it's a number)
+        if (isNaN(id)) {
+          alert('Please enter a valid ID.');
+          return;
+        }
+      
+        // Validate Date
+        const today = new Date().toISOString().split('T')[0];
+        if (date < today) {
+          alert('Please select a date in the future.');
+          return;
+        }
+      
+        // Validate Time
+        if (timeFrom >= timeTo) {
+          alert('Please ensure the "Time To" is greater than "Time From".');
+          return;
+        }
+      
+        // Validate Appointment Type
+        if (appointmentType === '') {
+          alert('Please select an appointment type.');
+          return;
+        }
+      
+        // If all validations pass, submit the form (or perform further actions)
+        alert('Form submitted successfully!');
+        // You can place the code for form submission or further processing here
+      }
+      
+</script>
+</body>
+</html>

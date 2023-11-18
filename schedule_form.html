@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Form</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Schedule Form</h2>
+        <form method="post" action="{% url 'schedule_form' %}">
+            {% csrf_token %}
+            
+            <!-- Date -->
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" class="form-control" name="date" id="date" required>
+            </div>
+
+            <!-- Time From -->
+            <div class="form-group">
+                <label for="timefrom">Time From:</label>
+                <input type="time" class="form-control" name="timefrom" id="timefrom" required>
+            </div>
+
+            <!-- Time To -->
+            <div class="form-group">
+                <label for="timeto">Time To:</label>
+                <input type="time" class="form-control" name="timeto" id="timeto" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <h3>My  Schedule:</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Time From</th>
+                    <th>Time To</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in doctors_schedule %}
+                    <tr>
+                        <td>{{ entry.date }}</td>
+                        <td>{{ entry.timefrom }}</td>
+                        <td>{{ entry.timeto }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
