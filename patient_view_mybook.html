@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Bookings</title>
+    <!-- Add any necessary CSS or stylesheets here -->
+</head>
+<body>
+    <h1>My Bookings</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Date of Booking</th>
+                <th>Status</th>
+                <!-- Add more table headers if needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.dateofbooking }}</td>
+                <td>{{ booking.Status }}</td>
+                <!-- Add more table cells with other booking details as needed -->
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- You can add additional content or formatting as required -->
+</body>
+</html>
