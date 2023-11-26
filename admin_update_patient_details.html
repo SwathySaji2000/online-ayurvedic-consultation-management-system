@@ -46,24 +46,24 @@
               </td>
             </tr>
             <tr>
-                <td><label for="Name">Name:</label></td>
+                <td><label for="fullName">Name:</label></td>
                 <td>
                   <input type="text" name="Name" id="fullName" oninput="validateName()" required>
                   <span id="NameError" class="error"></span>
                 </td>
               </tr>
-              <tr>
+              <!--<tr>
                 <td><label for="DOB">DOB:</label></td>
                 <td>
                   <input type="date" name="DOB" id="DOB" oninput="validateDOB()" required>
                   <span id="DOBError" class="error"></span>
                 </td>
-              </tr>
+              </tr>-->
               <tr>
-                <td><label for="specialization">Specialization:</label></td>
+                <td><label for="age">Age:</label></td>
                 <td>
-                  <input type="text" name="specialization" id="specialization" oninput="validatespecialization()" required>
-                  <span id="specializationError" class="error"></span>
+                  <input type="text" name="age" id="age" oninput="validateage()" required>
+                  <span id="ageError" class="error"></span>
                 </td>
               </tr>
               <tr>
@@ -90,7 +90,7 @@
               <tr>
                 <td><label for="gender">Gender:</label></td>
                 <td>
-                  <select id="gender" class="form-control" required name="genderxxx">
+                  <select id="genderxxx" class="form-control" required name="gender">
                     <option value="other">Gender</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>

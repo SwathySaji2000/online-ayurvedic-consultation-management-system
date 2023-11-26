@@ -1,0 +1,72 @@
+{% include 'admin_header.html' %}
+<div style="margin-bottom: 1em; margin-top: 3em; background:url('/static/assets/img/k.png') ; height: 100px; width: 100%; background-size: cover;" >
+</div>
+<style>
+    /* Table CSS */
+    .center-align {
+    text-align: center
+    
+    
+  }
+</style>
+
+
+
+<div class="center-align">
+<form action="" method="post">
+
+    {% if docs_up %}
+
+    <table class="table" style="width: 700px;margin-left: 30em;" border="1px">
+        <h2>Update Users</h2>
+
+        <tr>
+            <th>fullName</th>
+            <td><input type="text" id="sample" name="fullName" value="{{docs_up.fullName}}"  pattern="[A-za-z ]+$" required class="form-control"></td>
+        </tr>
+        <tr>
+            <th>Age</th>
+            <td><input type="number" name="age" value="{{docs_up.age}}"  class="form-control" pattern="[0-9]{10}" required title="number format"  class="form-control"></td>
+        </tr>
+        <tr>
+            <th>Place</th>
+            <td><input type="text" name="place" value="{{docs_up.place}}" class="form-control" pattern="[A-za-z ]+$" required></td>
+        </tr>
+        <tr>
+            <th>Phone </th>
+            <td><input type="text" name="phone" value="{{docs_up.Phone}}" pattern="[0-9]{10}" required title="number format"  class="form-control"></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td><input type="email" name="email" value="{{docs_up.Email}}" required class="form-control"></td>
+        </tr>
+           <!-- <th>dob</th>
+            <td><input type="date" id="dob" name="dob" value="{{doc_up.dob}}"  required class="form-control"></td>
+        </tr>-->
+    </tr>
+   <tr>
+    <th>Gender</th>
+    <td>
+        <select placeholder="gender" id="gender"  class="form-control" required name='gender'>
+            <option value="other" >gender</option>
+            <option value="male" >Male</option>
+            <option value="female">Female</option>
+        </select>
+    </td>
+   </tr>
+   
+   <tr>
+    <th>Password</th>
+    <td><input type="text" name="password" value="{{docs_up.password}}" class="form-control" pattern="^[0-9A-Za-z!@#$%^&*()_+{}:;.,?]+$" required></td>
+</tr>
+
+   
+
+        <tr>
+            <td align="center" colspan="2"><input type="submit" name="submit" value="Submit" class="btn btn-success" style="width: 150px;"></td>
+        </tr>
+    </table>
+    {% endif %}
+</form>
+</div>
+{% include 'admin_footer.html' %}

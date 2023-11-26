@@ -1,16 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>My Bookings</title>
-    <!-- Add any necessary CSS or stylesheets here -->
-</head>
+{% include 'user_header.html' %}
+
+ <!-- Start Banner Hero -->
+ <div id="work_banner" class="banner-wrapper bg-light w-100 py-5">
+    <div class="banner-vertical-center-work container text-light d-flex justify-content-center align-items-center py-5 p-0">
+        <div class="banner-content col-lg-8 col-12 m-lg-auto text-center">
+            <h1 class="banner-heading h2 display-3 pb-5 semi-bold-600 typo-space-line-center"></h1>
+            <h3 class="h4 pb-2 regular-400"></h3>
+            <p class="banner-body pb-2 light-300">
+                
+            </p>
+            {% comment %} <button type="submit" class="btn rounded-pill btn-outline-light px-4 me-4 light-300"></button>
+            <button type="submit" class="btn rounded-pill btn-secondary text-light px-4 light-300"></button> {% endcomment %}
+        </div>
+    </div>
+</div>
+<!-- End Banner Hero -->
 <body>
-    <h1>My Bookings</h1>
-    <table border="1">
+    <h1 class="col-md-6 m-auto h2 semi-bold-600 py-5">VIEW MY BOOKINGS</h1>
+
+    <table class="table" border="10">
         <thead>
             <tr>
+                <th>Doctor</th>
+                <th>Schedule From</th>
+                <th>Schedule To</th>
                 <th>Date of Booking</th>
+                
                 <th>Status</th>
                 <!-- Add more table headers if needed -->
             </tr>
@@ -18,7 +33,10 @@
         <tbody>
             {% for booking in bookings %}
             <tr>
-                <td>{{ booking.dateofbooking }}</td>
+                <td>{{booking.SCHEDULE.DOCTOR.Name}}
+                    <td>{{booking.SCHEDULE.timefrom}}
+                        <td>{{booking.SCHEDULE.timeto}}
+                        <td>{{ booking.dateofbooking }}</td>
                 <td>{{ booking.Status }}</td>
                 <!-- Add more table cells with other booking details as needed -->
             </tr>
@@ -26,5 +44,6 @@
         </tbody>
     </table>
     <!-- You can add additional content or formatting as required -->
-</body>
-</html>
+
+
+    {% include 'footer.html' %}

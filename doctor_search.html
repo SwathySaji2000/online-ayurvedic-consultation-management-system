@@ -1,0 +1,27 @@
+
+<!-- doctor_search.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctor Search</title>
+</head>
+<body>
+    <h1>Doctor Search</h1>
+    <form method="GET">
+        {{ form }}
+        <input type="submit" value="Search">
+    </form>
+    
+    {% if doctors %}
+        <h2>Search Results:</h2>
+        <ul>
+            {% for doctor in doctors %}
+                <li>{{ doctor.specialization }}</li>
+                <!-- Display other doctor details as needed -->
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
+

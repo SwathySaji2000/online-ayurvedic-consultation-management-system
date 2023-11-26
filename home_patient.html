@@ -1,0 +1,114 @@
+{% include 'user_header.html' %}
+
+ <!-- Start Banner Hero -->
+ <div id="work_banner" class="banner-wrapper bg-light w-100 py-5">
+    <div class="banner-vertical-center-work container text-light d-flex justify-content-center align-items-center py-5 p-0">
+        <div class="banner-content col-lg-8 col-12 m-lg-auto text-center">
+            <h1 class="banner-heading h2 display-3 pb-5 semi-bold-600 typo-space-line-center"></h1>
+            <h3 class="h4 pb-2 regular-400"></h3>
+            <p class="banner-body pb-2 light-300">
+                
+            </p>
+            {% comment %} <button type="submit" class="btn rounded-pill btn-outline-light px-4 me-4 light-300"></button>
+            <button type="submit" class="btn rounded-pill btn-secondary text-light px-4 light-300"></button> {% endcomment %}
+        </div>
+    </div>
+</div>
+<!-- End Banner Hero -->
+
+
+
+
+    <!-- Start Recent Work -->
+    <section class="py-5 mb-5">
+        <div class="container">
+            <div class="recent-work-header row text-center pb-5">
+                <h2 class="col-md-6 m-auto h2 semi-bold-600 py-5">Our Doctors</h2>
+            </div>
+            <div class="row gy-5 g-lg-5 mb-4">
+                {% for doctor in docview %}
+
+                <!-- Start Recent Work -->
+                <div class="col-md-4 mb-3">
+                    <a href="{% url 'view_slots' doctor_id=doctor.id %}" class="recent-work card border-0 shadow-lg">
+                        <img class="recent-work-img card-img" src="/static/{{doctor.pic}}" alt="Card image" width="500px" height="500px">
+                        <div class="recent-work-vertical card-img-overlay d-flex align-items-end">
+                            <div class="recent-work-content text-start mb-3 ml-3 text-dark">
+                                <h3 class="card-title light-300">{{ doctor.Name }}</h3>
+                                <p class="card-text">{{ doctor.specialization }}</p>
+                                <p class="card-text">{{ doctor.phone }}</p>
+                                <p class="card-text">{{ doctor.email }}</p>
+                                <p  class="card-text">
+                                    <button class="btn rounded-pill btn-secondary text-light px-4 light-300"> View Slots</button>
+                                </p>
+                                
+                                
+
+                                    
+
+                                </button>
+                                
+                            </div>
+                        </div>
+                    </a>
+                </div><!-- End Recent Work -->
+
+                {% endfor %}
+
+
+            
+
+              
+             
+              
+
+            </div>
+        </div>
+    </section>
+    <!-- End Recent Work -->
+
+
+{% comment %} <div class="container">
+    <h1>Welcome, Patient!</h1>
+
+    <center>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">View My Bookings</h5>
+                <p class="card-text">View your upcoming and past appointments.</p>
+                <a href="{% url 'my-bookings' %}" class="btn btn-primary">View Bookings</a>
+            </div>
+        </div>
+    </center> {% endcomment %}
+
+    <!-- Doctor Cards -->
+    {% comment %} <div class="row mt-4">
+        {% for doctor in docview %}
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ doctor.Name }}</h5>
+                        <p class="card-text">Specialization: {{ doctor.specialization }}</p>
+                        <p class="card-text">Phone: {{ doctor.phone }}</p>
+                        <p class="card-text">Email: {{ doctor.email }}</p>
+                        {% if doctor.picture %}
+                            <img src="{{ doctor.picture.url }}" class="card-img-bottom" alt="Doctor's Profile Picture">
+                        {% else %} {% endcomment %}
+                            <!-- If no picture is available, you can display a placeholder image or message -->
+                           {% comment %} <p>No profile picture available</p>
+                        {% endif %}
+                        <a href="{% url 'view_slots' doctor_id=doctor.id %}" class="btn btn-primary">View Slots</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html> {% endcomment %}
+
+{% include 'footer.html' %}

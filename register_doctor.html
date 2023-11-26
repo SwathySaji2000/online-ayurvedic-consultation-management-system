@@ -60,16 +60,16 @@
                   <a class="nav-link" href="about.html"> About </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="schedule.html"> Schedule </a>
+                  <a class="nav-link" href="{% url "schedule" %}"> Schedule </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="Product.html"> Product </a>
+                  <a class="nav-link" href="Treatment.html"> Treatment </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="Contact.html">Contact us</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url "login" %}">Login</a>
+                  <a class="nav-link" href="{% url "login_fun_page" %}">Login</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url "register" %}">Register</a>
@@ -124,7 +124,7 @@
 </style>
 </head>
 <body>
-    <form method="POST" action="" onsubmit="return validateForm()">
+    <form method="POST"  enctype="multipart/form-data" onsubmit="return validateForm()">
         {% csrf_token %}
         <div class="right-side">
             <div class="image-container">
@@ -170,14 +170,18 @@
                         </select>
                     </div>
                         <br>
+                        <br>
+                         <input type="file" placeholder="profile picture" name="pictures" id="picture" class="input-box" > 
+                        {% comment %} <span id="specializationError" class="error"></span> {% endcomment %}
+                        <br>
                         <input type="password" placeholder="Password" name="password" id="password" oninput="validatePassword()" required>
                         <span id="passwordError" class="error"></span>
                         <br>
                         <!--input type="password" placeholder="Confirm Password" name="confirmPassword" oninput="validateConfirmPassword()">
                         <span id="confirmPasswordError" class="error"></span>
                         <br>-->
-                        <a href="{% url "login" %}"><button type="submit">REGISTER</button></a><br>
-                        <p>Already have an account? <a href="login_fun">Login</a></p>
+                        <a href="{% url "login_fun_page" %}"><button type="submit">REGISTER</button></a><br>
+                        <p>Already have an account? <a href="{% url 'login_fun_page' %}">Login</a></p>
                     </div>
                 </div>
             </div>

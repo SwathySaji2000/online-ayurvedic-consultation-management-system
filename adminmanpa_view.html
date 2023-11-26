@@ -27,20 +27,22 @@
           <th>Gender</th>
           <th>Phone</th>
           <th>Email</th>
+          <th>Password</th>
           <th>Delete</th>
           <th>Update</th>
         </tr>
 
-        {% for i in docviews %}
+        {% for j in docviews %}
         <tr>
-          <td>{{i.fullName}}</td>
-          <td>{{i.age}}</td>
-          <td>{{i.place}}</td>
-          <td>{{i.gender}}</td>
-          <td>{{i.phone}}</td>
-          <td>{{i.email}}</td>
-          <td><a href="/delete_patient/{{i.LOGIN_id}}" class="btn btn-warning">Delete</a></td>
-          <!--<td><a href="/admin_update_doctor_details/{{i.id}}" class="btn btn-warning">Update</a></td>-->
+          <td>{{j.FullName}}</td>
+          <td>{{j.Age}}</td>
+          <td>{{j.Place}}</td>
+          <td>{{j.Gender}}</td>
+          <td>{{j.phone}}</td>
+          <td>{{j.email}}</td>
+          <td>{{j.Password}}</td>
+          <td><a href="/delete_user/{{j.LOGIN_id}}" class="btn btn-warning">Delete</a></td>
+          <td><a href="/admin_update_user/{{j.id}}" class="btn btn-warning">Update</a></td>
         </tr>
         {% endfor %}
       </table>

@@ -1,14 +1,66 @@
- <!-- footer section -->
-  <section class="container-fluid footer_section">
-    <p>
-      &copy; 2023 All Rights Reserved By
-      <a href="https://html.design"></a>
-    </p>
-  </section>
-  <!-- footer section -->
+ <!-- Start Footer -->
+ <footer class="bg-secondary pt-4">
+  <div class="container">
+      <div class="row py-4">
 
-  <script type="text/javascript" src="/static/js/jquery-3.4.1.min.js"></script>
-  <script type="text/javascript" src="/static/js/bootstrap.js"></script>
+       
+
+
+  
+
+  <div class="w-100 bg-primary py-3">
+      <div class="container">
+          <div class="row pt-2">
+              <div class="col-lg-6 col-sm-12">
+                  <p class="text-lg-start text-center text-light light-300">
+                      © Copyright 2023 Herbal Company. All Rights Reserved.
+                  </p>
+              </div>
+              <div class="col-lg-6 col-sm-12">
+                  <p class="text-lg-end text-center text-light light-300">
+                      Designed by <a rel="sponsored" class="text-decoration-none text-light" href="" target="_blank"><strong>Herbal</strong></a>
+                  </p>
+              </div>
+          </div>
+      </div>
+  </div>
+
+</footer>
+<!-- End Footer -->
+
+
+<!-- Bootstrap -->
+<script src="/static/assets1/js/bootstrap.bundle.min.js"></script>
+<!-- Load jQuery require for isotope -->
+<script src="/static/assets1/js/jquery.min.js"></script>
+<!-- Isotope -->
+<script src="/static/assets1/js/isotope.pkgd.js"></script>
+<!-- Page Script -->
+<script>
+  $(window).load(function() {
+      // init Isotope
+      var $projects = $('.projects').isotope({
+          itemSelector: '.project',
+          layoutMode: 'fitRows'
+      });
+      $(".filter-btn").click(function() {
+          var data_filter = $(this).attr("data-filter");
+          $projects.isotope({
+              filter: data_filter
+          });
+          $(".filter-btn").removeClass("active");
+          $(".filter-btn").removeClass("shadow");
+          $(this).addClass("active");
+          $(this).addClass("shadow");
+          return false;
+      });
+  });
+</script>
+<!-- Templatemo -->
+<script src="/static/assets1/js/templatemo.js"></script>
+<!-- Custom -->
+<script src="/static/assets1/js/custom.js"></script>
+
 </body>
 
 </html>
