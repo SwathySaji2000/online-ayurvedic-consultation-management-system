@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title><center>Doctor's Work Schedule</center></title>
+</head>
+<style>
+    {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    
+    form {
+        max-width: 500px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 2px solid #007bff;
+        border-radius: 10px;
+    }
+    
+    h1 {
+        color: #007bff;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 10px;
+    }
+    
+    input[type="text"],
+    select,
+    input[type="time"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+    
+    input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+    
+    input[type="submit"]:hover {
+        background-color: #0056b3;
+    }
+    
+    /* Additional CSS for interactive elements */
+    input[type="time"]:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px #007bff;
+    }
+    /* Your existing CSS styles */
+
+/* Additional CSS for icons */
+input[type="time"]:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px #007bff;
+}
+
+
+
+
+
+
+</style>
+
+    <body>
+        <h1>Doctor's Work Schedule</h1>
+        <form id="scheduleForm">
+            <label for="doctorName">Doctor's Name:</label>
+            <input type="text" id="doctorName" name="doctorName" required>
+    
+            <label for="workDays">Work Days:</label>
+            <select id="workDays" name="workDays" multiple>
+                <option value="monday">Monday</option>
+                <option value="tuesday">Tuesday</option>
+                <option value="wednesday">Wednesday</option>
+                <option value="thursday">Thursday</option>
+                <option value="friday">Friday</option>
+                <option value="saturday">Saturday</option>
+            </select>
+    
+            <label for="startTime">Start Time:</label>
+            <input type="time" id="startTime" name="startTime" required>
+    
+            <label for="endTime">End Time:</label>
+            <input type="time" id="endTime" name="endTime" required>
+    
+            <label for="lunchTime">Lunch Time:</label>
+            <input type="time" id="lunchTime" name="lunchTime" value="13:00" readonly>
+    
+            <label for="leaveDate">Apply for Leave:</label>
+            <input type="date" id="leaveDate" name="leaveDate" min="2024-02-09">
+    
+            <label for="leaveType">Leave Type:</label>
+            <select id="leaveType" name="leaveType">
+                <option value="fullDay">Full Day</option>
+                <option value="halfDay">Half Day</option>
+            </select>
+    
+            <label for="leaveReason">Reason for Leave:</label>
+            <textarea id="leaveReason" name="leaveReason"></textarea>
+    
+            <input type="submit" value="Submit">
+        </form>
+        <script src="script.js"></script>
+    </body>
+    </html>
