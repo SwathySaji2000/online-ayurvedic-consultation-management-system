@@ -1,0 +1,94 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% include 'public_header.html'%}
+
+
+<form method="POST" action="" onsubmit="return validateForm()">
+
+
+    <!-- Start Banner Hero -->
+    <section class="bg-light w-100">
+        <div class="container">
+            <div class="row d-flex align-items-center py-5">
+                <div class="col-lg-6 text-start">
+                  <h2 class="h2 py-5 text-primary typo-space-line">SELLER REGISTRATION</h2>
+                  <input type="text" placeholder="Seller Name" style="width: 550px;" name="Name" class="form-control" id="Name" oninput="validateSeller Name()" required>
+                    <span id="NameError" class="error"></span>
+                    <br>
+                    <input type="email" placeholder="Email" style="width: 550px;" name="email" class="form-control" id="email" class="input-box" oninput="validateEmail()" required>
+                    <span id="emailError" class="error"></span>
+                    <br>
+                    <input type="brandname" placeholder="Brand Name" style="width: 550px;" name="brand_name" class="form-control" id="brand_name" class="input-box" oninput="validateBrand_name()" required>
+                    <span id="brand_nameError" class="error"></span>
+                    <br>
+                    <input type="tel" placeholder="Phone" style="width: 550px;" name="phone" class="form-control" id="phone" class="input-box" oninput="validatePhone()" required>
+                    <span id="phoneError" class="error"></span>
+                    <br>
+
+                    <br>
+                    <input type="password" placeholder="Password" style="width: 550px;" class="form-control" name="password" id="password" oninput="validatePassword()" required>
+                    <span id="passwordError" class="error"></span>
+                    <br>
+                    <br>
+                     <input type="file" placeholder="profile picture" name="pics" id="pic" class="input-box" > 
+                        <br>
+                        <input type="date" placeholder="Registration_Date" name="date" id="registration_date" class="input-box" oninput="validatedate()" required>
+                        <span id="registration_dateError" class="error"></span>
+                        <br>
+
+                    <a href="{% url "login_fun_page" %}"><button class="btn btn-success" type="submit">REGISTER</button></a><br>
+                    <p>Already have an account?  <a href="{% url 'login_fun_page' %}">Login</a></p>
+           
+                    <p class="forgot-password"><a  href="">Forgot Password?</a></p><br>
+
+
+                 <p class="light-300">
+                    
+                        {% comment %} Vector illustration credit goes to <a rel="nofollow" href="http://freepik.com/" target="_blank">FreePik</a> website. Purple Buzz is provided by TemplateMo. Lorem ipsum dolor sit amet, consectetur. {% endcomment %}
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <img src="/static/assets1/img/work.svg">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Hero -->
+  
+                
+
+
+
+  
+                        
+      
+</form>
+
+<!-- End Choice -->
+    {% include 'footer.html'%}
+
+
+
+    
+  
