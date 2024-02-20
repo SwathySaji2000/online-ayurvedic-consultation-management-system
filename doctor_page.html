@@ -11,25 +11,30 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="col-md-6 m-auto h2 semi-bold-600 py-5 text-center">Today's Appointments</h1>
+        <h1 class="col-md-6 m-auto h2 semi-bold-600 py-5 text-center">Appointments</h1>
         
         <div class="table-responsive">
             <table class="table table-striped table-bordered">
                 <thead class="thead-dark">
                     <tr>
-                        <th>Patient Name</th>
+                        <th> Name</th>
+                        <th>Email</th>
                         <th>Date of Booking</th>
                         <th>Status</th>
+                        <th>Add Prescription</th>
                         <!-- Add more table headers as needed -->
                     </tr>
                 </thead>
                 <tbody>
-                    {% for appointment in today_appointments %}
+                    {% for booking in bookings %}
                     <tr>
-                        <td>{{ booking.Users.fullName }}</td>
-                        <td>{{ booking.date_of_booking }}</td>
-                        <td>{{ booking.status }}</td>
+                        <td>{{ booking.USER.FullName }}</td>
+                        <td>{{ booking.USER.email}}</td>
+                        <td>{{ booking.dateofbooking }}</td>
+                        <td>{{ booking.Status }}</td> 
+                        <!-- <td>{{ booking.prescription }}</td> -->
                         <!-- Add more table cells for other details -->
+                        <td><a href="/prescription/{{booking.id}}" class="btn btn-primary">Prescription</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
