@@ -1,1 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product Category</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+    }
+    
+    .container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    label {
+        font-weight: bold;
+    }
+    
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    
+    button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background-color: #0056b3;
+    }
+    
+</style>
+<body>
+    <div class="container">
+        <h1>Add Product Category</h1>
+        <form action="{% url 'category' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="categoryName">Category Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter category name" required>
+            </div>
+            <button type="submit">Add Category</button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Action</th> <!-- New column for the delete button -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for category in categories %}
+                <tr>
+                    <td>{{ category.name }}</td>
+                    <td>
+                        {% if category.id %}
+                        <form action="{% url 'delete_category' category.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit">Delete</button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
+
+
 
