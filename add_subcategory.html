@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product Subcategory</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Add Product Subcategory</h1>
+        <form method="post">
+            {% csrf_token %}
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f2f2f2;
+                }
+                
+                .container {
+                    max-width: 500px;
+                    margin: 50px auto;
+                    padding: 20px;
+                    background-color: #fff;
+                    border-radius: 5px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                }
+                
+                h1 {
+                    text-align: center;
+                    margin-bottom: 20px;
+                }
+                
+                .form-group {
+                    margin-bottom: 20px;
+                }
+                
+                label {
+                    font-weight: bold;
+                }
+                
+                input[type="text"],
+                select {
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    box-sizing: border-box;
+                }
+                
+                button {
+                    padding: 10px 20px;
+                    background-color: #007bff;
+                    color: #fff;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                }
+                
+                button:hover {
+                    background-color: #0056b3;
+                }
+                
+            </style>
+            <div class="form-group">
+                <label for="category">Select Category:</label>
+                <select id="category_id" name="category_id" required>
+                    <option value="" disabled selected>Select category</option>
+                    <!-- Populate categories dynamically from database -->
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="subcategoryName">Subcategory Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter subcategory name" required>
+            </div>
+            <button type="submit">Add Subcategory</button>
+        </form>
+    </div>
+</body>
+</html>

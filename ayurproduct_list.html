@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <style>
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .product-card {
+            width: calc(50% - 20px);
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .product-image {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .product-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .product-description {
+            margin-bottom: 5px;
+        }
+        .product-price {
+            color: green;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .product-discount {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+      
+    <!--<div class="form-group">
+        <label for="subcategoryName">Subcategory Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter subcategory name" required>
+    </div>-->
+
+
+
+    <div class="form-group">
+        <label for="product name"> Product Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter product name" required>
+    </div>
+    <div class="form-group">
+        <label for="product description">Product Description:</label>
+        <textarea id="description" name="description" placeholder="Enter product description" required></textarea>
+    </div>
+    <div class="form-group">
+        <label for="product price">Product Price:</label>
+        <input type="number" id="price" name="price" placeholder="Enter product price" required>
+    </div>
+    <div class="form-group">
+        <label for="product discount">Product Discount:</label>
+        <input type="text" id="discount" name="discount" placeholder="Enter product discount" required>
+    </div>
+    <div class="form-group">
+        <label for=" product quantityavailable">Product Quantity Available:</label>
+        <input type="number" id="quantity_available" name="quantity_available" placeholder="Enter quantity available" required>
+    </div>
+    <div class="form-group">
+        <label for="product image">Product Image:</label>
+        <input type="file" id="image" name="image" accept="image/*" required>
+    </div>
+    <div class="form-group">
+        <label for="productadditional image">Product Additional Image:</label>
+        <input type="file" id="add_image" name="add_image" accept="image/*">
+    </div>
+    <div class="form-group">
+        <label for="product ingredients">Product Ingredients:</label>
+        <textarea id="ingredients" name="ingredients" placeholder="Enter product ingredients"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="product ayurvedicproperties">Product Ayurvedic Properties:</label>
+        <input type="text" id="ayurvedic_properties" name="ayurvedic_properties" placeholder="Enter Ayurvedic properties">
+    </div>
+    <div class="form-group">
+        <label for="product usageinstructions">Product Usage Instructions:</label>
+        <textarea id="usage_instructions" name="usage_instructions" placeholder="Enter usage instructions"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="product certificate">Product Certificate:</label>
+        <input type="file" id="certifications" name="certifications" accept="image/*">
+    </div>
+    <div class="form-group">
+        <label for="product expirydate">Product Expiry Date:</label>
+        <input type="date" id="expiry_date" name="expiry_date">
+    </div>
+    <div class="form-group">
+        <label for="product manufacturer">Product Manufacturer:</label>
+        <input type="text" id="manufacturer" name="manufacturer" placeholder="Enter manufacturer">
+    </div>
+    <div class="form-group">
+        <label for="seller">Seller:</label>
+        <select id="seller" name="sseller" required>
+            <!-- Option values will be dynamically generated based on available sellers -->
+            <option value="">Select seller</option>
+            <!-- Example options -->
+            <option value="1">Seller 1</option>
+            <option value="2">Seller 2</option>
+            <option value="3">Seller 3</option>
+            <!-- Add more options as needed -->
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="category">Category:</label>
+        <select id="category" name="category" required>
+            <!-- Option values will be dynamically generated based on available categories -->
+            <option value="">Select category</option>
+            <!-- Example options -->
+            <option value="1">Category 1</option>
+            <option value="2">Category 2</option>
+            <option value="3">Category 3</option>
+            <!-- Add more options as needed -->
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="subcategory">Subcategory:</label>
+        <select id="subcategory" name="subcategory" required>
+            <!-- Option values will be dynamically generated based on available subcategories -->
+            <option value="">Select subcategory</option>
+            <!-- Example options -->
+            <option value="1">Subcategory 1</option>
+            <option value="2">Subcategory 2</option>
+            <option value="3">Subcategory 3</option>
+            <!-- Add more options as needed -->
+        </select>
+    </div>
+    
+    
+
+    
+</body>
+</html>
