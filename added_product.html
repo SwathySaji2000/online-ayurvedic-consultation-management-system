@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Products</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .product-card-header {
+            background-color: #8A2BE2; /* Violet color */
+            color: #fff;
+            padding: 15px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .product-card-body {
+            padding: 20px;
+        }
+
+        .product-info {
+            margin-bottom: 15px;
+        }
+
+        .product-info label {
+            font-weight: bold;
+            display: inline-block;
+            width: 150px;
+        }
+
+        .product-info p {
+            margin: 5px 0;
+        }
+
+        .product-images {
+            margin-top: 20px;
+        }
+
+        .product-images img {
+            max-width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Products Added by Seller</h1>
+        {% for product in products %}
+        <div class="product-card">
+            <div class="product-card-header">
+                <h2>{{ product.name }}</h2>
+            </div>
+            <div class="product-card-body">
+                <!-- Add image display -->
+                {% if product.product_image %}
+                <div class="product-images">
+                    <img src="{{ product.product_image.url }}" alt="Product Image">
+                </div>
+                {% endif %}
+            <div class="product-card-body">
+                <div class="product-info">
+                    <label>Category:</label>
+                    <p>{{ product.category }}</p>
+                </div>
+                <div class="product-info">
+                    <label>Subcategory:</label>
+                    <p>{{ product.subcategory }}</p>
+                </div>
+                <div class="product-info">
+                    <label>Manufacturer:</label>
+                    <p>{{ product.manufacturer }}</p>
+                </div>
+                <div class="product-info">
+                    <label>Expiry Date:</label>
+                    <p>{{ product.expiry_date }}</p>
+                </div>
+                <div class="product-info">
+                    <label>Product Certificate:</label>
+                    {% if product.certifications %}
+                        <a href="{{ product.certifications.url }}" download>Download Certificate</a>
+                    {% else %}
+                        <p>No certificate available</p>
+                    {% endif %}
+                </div>
+                
+                <div class="product-info">
+                    <label>Description:</label>
+                    <p>{{ product.description }}</p>
+                </div>
+                <div class="product-info">
+                    <label>Price:</label>
+                    <p>Rs:{{ product.price }}</p>
+                </div>
+                <div class="product-info">
+                    <label>Discount:</label>
+                    <p>{{ product.discount }}</p>
+                </div>
+                <div class="product-info">
+                    <label>Quantity Available:</label>
+                    <p>{{ product.quantity_available }}</p>
+                </div>
+                <div class="product-info">
+                    <label>Ingredients:</label>
+                    <p>{{ product.ingredients }}</p>
+                </div>
+                <div class="product-info">
+                    <label>Ayurvedic Properties:</label>
+                    <p>{{ product.ayurvedic_properties }}</p>
+                </div>
+                <div class="product-info">
+                    <label>Usage Instructions:</label>
+                    <p>{{ product.usage_instructions }}</p>
+                </div>
+              
+            </div>
+        </div>
+        {% empty %}
+        <p>No products added by this seller yet.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

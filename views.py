@@ -595,12 +595,31 @@ def category_product(request):
         categoryName = request.POST['name']
         cat = Category()
         cat.name = categoryName
-        cat.save()   
+        cat.save()  
+        return redirect('sub_category') 
     categories = Category.objects.all()
     context = {
         "categories": categories,
     }
-    return render(request, 'category_page.html', context)
+    return render(request, 'category_page.html',context)
+    
+from django.shortcuts import redirect, get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
+
+def delete_category(request, category_id):
+    if request.method == 'POST':
+        try:
+            category = get_object_or_404(Category, id=category_id)
+            category.delete()
+            messages.success(request, 'Category deleted successfully')
+        except ObjectDoesNotExist:
+            messages.error(request, 'Category not found')
+    
+    return HttpResponse("<script>alert('deleted successfully');window.location='/seller_index'</script>")     
+
+
+
+
 
 
 def sub_category(request):
@@ -612,34 +631,82 @@ def sub_category(request):
        scat.name= subcategoryname
        scat.category_id = category_id 
        scat.save()
+       return redirect('product_list')
     categories = Category.objects.all()
     context = {
         "categories": categories,
     }
     return render(request,'add_subcategory.html', context)   
     
+from django.shortcuts import render, redirect
+from django.http import HttpResponseServerError
+from django.core.exceptions import ObjectDoesNotExist
+from .models import Product, Category, Subcategory, Seller
+
 def product_list(request):
     if request.method == 'POST':
-       productname = request.POST.get('name')
-       productdescription = request.POST.get('description')
-       productprice = request.POST.get('price')
-       productdiscount = request.POST.get('discount')
-       productquantityavailable = request.POST.get('quantity_available')
-       productimage = request.FILES.get('image')
-       productadditionalimage = request.FILES.get('add_image')
-       productingredients = request.POST.get('ingredients')
-       productayurvedicproperties = request.POST.get('ayurvedic_properties')
-       productusageinstructions = request.POST.get('usage_instructions')
-       productcertificate = request.FILES.get('certifications')
-       productexpirydate = request.POST.get('expiry_date')
-       productmanufacturer = request.FILES.get('manufacturer')
-       pr = Product(name=productname,description=productdescription,price=productprice,discount=productdiscount,quantity_available=productquantityavailable,image=productimage,add_image=productadditionalimage,ingredients=productingredients,ayurvedic_properties=productayurvedicproperties,usage_instructions=productusageinstructions,certifications=productcertificate,expiry_date=productexpirydate,manufacturer=productmanufacturer)
-       pr.save()
-       products= Product.objects.all()
-       categories = Category.objects.all()
-       categories.save()
-       scat = Subcategory.objects.all()
-       scat.save()
-       seller = Seller.objects.all()
-       seller.save()
-       return render(request,'ayurproduct_list.html',{'products': products})
+        try:
+            # Extract data from the POST request
+            productname = request.POST.get('productname')
+            productdescription = request.POST.get('productdescription')
+            productprice = request.POST.get('productprice')
+            productdiscount = request.POST.get('productdiscount')
+            productquantityavailable = request.POST.get('productquantityavailable')
+            
+            productingredients = request.POST.get('productingredients')
+          
+            productusageinstructions = request.POST.get('productusageinstructions')
+            productcertificate = request.FILES.get('productcertificate')
+            productexpirydate = request.POST.get('productexpirydate')
+            productmanufacturer = request.POST.get('productmanufacturer')
+            category_id = request.POST.get('category')  # Get the selected category ID
+            subcategory_id = request.POST.get('subcategory')  # Get the selected subcategory ID
+            seller_id = request.POST.get('seller')  # Get the selected seller ID
+            product_image = request.FILES.get('product_image')
+            # Get the Category, Subcategory, and Seller objects based on the selected IDs
+            category = Category.objects.get(id=category_id)
+            subcategory = Subcategory.objects.get(id=subcategory_id)
+            seller = Seller.objects.get(id=seller_id)
+
+            # Create and save the new product
+            pr = Product.objects.create(
+                name=productname,
+                description=productdescription,
+                price=productprice,
+                discount=productdiscount,
+                quantity_available=productquantityavailable,
+                product_image=product_image ,
+               
+                ingredients=productingredients,
+               
+                usage_instructions=productusageinstructions,
+                certifications=productcertificate,
+                expiry_date=productexpirydate,
+                manufacturer=productmanufacturer,
+                category=category,  # Assign the category to the product
+                subcategory=subcategory,  # Assign the subcategory to the product
+                seller=seller  # Assign the seller to the product
+                
+            )
+
+            # Redirect to prevent form resubmission on page refresh
+            return redirect('product_display')
+        except ObjectDoesNotExist:
+            # Handle the case where the specified objects do not exist
+            return HttpResponseServerError("One of the selected objects does not exist.")
+        except Exception as e:
+            # Handle other exceptions
+            return HttpResponseServerError(f"An error occurred: {e}")
+    else:
+        # Handle GET request to render the page with the form
+        products = Product.objects.all()
+        categories = Category.objects.all()  # Fetch all categories
+        subcategories = Subcategory.objects.all()  # Fetch all subcategories
+        sellers = Seller.objects.all()  # Fetch all sellers
+        return render(request, 'ayurproduct_list.html', {'products': products, 'categories': categories, 'subcategories': subcategories, 'sellers': sellers})
+    
+
+def added_products(request):
+     # Fetch all added products
+     products = Product.objects.all()
+     return render(request, 'added_product.html', {'products': products})    

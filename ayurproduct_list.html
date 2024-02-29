@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,10 +76,10 @@
 </head>
 <body>
     <div class="container">
-        <h1>Add Product</h1>
+    
 
 
-    <form method="post" action="{% url 'product_list' %}" enctype="multipart/form-data">
+        <form method="post" action="{% url 'product_list' %}" enctype="multipart/form-data">
         {% csrf_token %}
         <!-- Your form fields here -->
         <div class="form-group">
@@ -130,21 +132,16 @@
             <input type="number" id="productquantityavailable" name="productquantityavailable" placeholder="Enter quantity available" required>
         </div>
         <div class="form-group">
-            <label for="product image">Product Image:</label>
-            <input type="file" id="productimage" name="productimage" accept="image/*" required>
+            <!-- Add the product image field -->
+            <label for="product_image">Product Image:</label>
+            <input type="file" id="product_image" name="product_image" accept="image/*">
         </div>
-        <div class="form-group">
-            <label for="productadditional image">Product Additional Image:</label>
-            <input type="file" id="productadditionalimage" name="productadditionalimage" accept="image/*">
-        </div>
+        
         <div class="form-group">
             <label for="product ingredients">Product Ingredients:</label>
             <textarea id="productingredients" name="productingredients" placeholder="Enter product ingredients"></textarea>
         </div>
-        <div class="form-group">
-            <label for="product ayurvedicproperties">Product Ayurvedic Properties:</label>
-            <input type="text" id="productayurvedicproperties" name="productayurvedicproperties" placeholder="Enter Ayurvedic properties">
-        </div>
+       
         <div class="form-group">
             <label for="product usageinstructions">Product Usage Instructions:</label>
             <textarea id="productusageinstructions" name="productusageinstructions" placeholder="Enter usage instructions"></textarea>
@@ -154,44 +151,18 @@
             <input type="file" id="productcertificate" name="productcertificate" accept="image/*">
         </div>
         <div class="form-group">
-            <label for="product expirydate">Product Expiry Date:</label>
-            <input type="date" id="productexpiry_date" name="productexpiry_date" placeholder="Enter expiry date">
+            <label for="productexpirydate">Product Expiry Date:</label>
+            <input type="date" id="productexpirydate" name="productexpirydate" placeholder="Enter expiry date">
         </div>
         <div class="form-group">
             <label for="product manufacturer">Product Manufacturer:</label>
             <input type="text" id="productmanufacturer" name="productmanufacturer" placeholder="Enter manufacturer">
         </div>
-        <!--<div class="form-group">
-            <label for="category">Category:</label>
-            <select id="category" name="category" required>
-                {% for category in categories %}
-                <option value="{{ category.id }}">{{ category.name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        
-        <div class="form-group">
-            <label for="seller">Seller:</label>
-            <select id="seller" name="seller" required>
-                {% for seller in sellers %}
-                <option value="{{ seller.id }}">{{ seller.Name }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        
-        
-        <div class="form-group">
-            <label for="subcategory">Subcategory:</label>
-            <select id="subcategory" name="subcategory" required>
-                <option value="">Select subcategory</option>
-                {% for subcategory in subcategories %}
-                    <option value="{{ subcategory.id }}">{{ subcategory.name }}</option>
-                {% endfor %}
-            </select>
-        </div>-->
+      
         <button type="submit">Add Product</button>
     </form>
    
 </body>
 
 </html>
+
