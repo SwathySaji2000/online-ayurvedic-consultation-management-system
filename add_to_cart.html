@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add to Cart</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        .product-details {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        
+        .product-details img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+        
+        .product-details h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .product-details p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        .add-to-cart-btn {
+            display: block;
+            width: 100%;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .add-to-cart-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+            
+</head>
+<body>
+    <div class="product-details">
+        <img src="{{ product.product_image.url }}" alt="{{ product.name }}">
+        <h2>{{ product.name }}</h2>
+        <p>Description: {{ product.description }}</p>
+        <p>Price: ₹{{ product.price }}</p>
+        <p>Ingredients: {{ product.ingredients }}</p>
+        <p>Usage: {{ product.usage_instructions }}</p>
+        <form action="{% url 'add-to-cart' product.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+        </form>
+    </div>
+</body>
+</html>
