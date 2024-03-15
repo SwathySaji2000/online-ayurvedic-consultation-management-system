@@ -1,26 +1,4 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {% include 'public_header.html'%}
 
 
@@ -33,19 +11,18 @@
             <div class="row d-flex align-items-center py-5">
                 <div class="col-lg-6 text-start">
                   <h2 class="h2 py-5 text-primary typo-space-line">SELLER REGISTRATION</h2>
-                  <input type="text" placeholder="Seller Name" style="width: 550px;" name="Name" class="form-control" id="Name" oninput="validateSeller Name()" required>
+                  <input type="text" placeholder="Seller Name" style="width: 550px;" name="Name" class="form-control" id="Name" oninput="validateSellerName()" required>
                     <span id="NameError" class="error"></span>
                     <br>
                     <input type="email" placeholder="Email" style="width: 550px;" name="email" class="form-control" id="email" class="input-box" oninput="validateEmail()" required>
                     <span id="emailError" class="error"></span>
                     <br>
-                    <input type="brandname" placeholder="Brand Name" style="width: 550px;" name="brand_name" class="form-control" id="brand_name" class="input-box" oninput="validateBrand_name()" required>
+                    <input type="brandname" placeholder="Brand Name" style="width: 550px;" name="brand_name" class="form-control" id="brand_name" class="input-box" oninput="validateBrandname()" required>
                     <span id="brand_nameError" class="error"></span>
                     <br>
                     <input type="tel" placeholder="Phone" style="width: 550px;" name="phone" class="form-control" id="phone" class="input-box" oninput="validatePhone()" required>
                     <span id="phoneError" class="error"></span>
                     <br>
-
                     <br>
                     <input type="password" placeholder="Password" style="width: 550px;" class="form-control" name="password" id="password" oninput="validatePassword()" required>
                     <span id="passwordError" class="error"></span>
@@ -53,7 +30,7 @@
                     <br>
                      <input type="file" placeholder="profile picture" name="pics" id="pic" class="input-box" > 
                         <br>
-                        <input type="date" placeholder="Registration_Date" name="date" id="registration_date" class="input-box" oninput="validatedate()" required>
+                        <input type="date" placeholder="Registration_Date" name="registration_date" id="registration_date" class="input-box" oninput="validatedate()" required>
                         <span id="registration_dateError" class="error"></span>
                         <br>
 
@@ -76,19 +53,111 @@
     </section>
     <!-- End Banner Hero -->
   
-                
-
-
-
-  
-                        
+                 
       
 </form>
 
 <!-- End Choice -->
     {% include 'footer.html'%}
 
+    <script>
+        function validateSellerName() {
+            const nameInput = document.getElementById('Name');
+            const nameError = document.getElementById('NameError');
+            const namePattern = /^[A-Z][a-z]*$/;
 
+        if (!namePattern.test(nameInput.value)) {
+        alert('Name must start with an uppercase letter and contain only letters.');
+        nameInput.value = ""; // Clear the input field
+        nameError.textContent = '';
+        return false;
+        } else {
+        nameError.textContent = '';
+        return true;
+        }
+    }
+       
+          function validateEmail() {
+            const emailInput = document.getElementById('email');
+            const emailError = document.getElementById('emailError');
+            const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
 
+            if (!emailPattern.test(emailInput.value)) {
+                emailError.textContent = 'Invalid email format.';
+            } else {
+                emailError.textContent = '';
+            }
+        }
+        
+        function validateBrandname() {
+            var brand_nameInput = document.getElementById("brand_name");
+            var brand_nameError = document.getElementById("brand_nameError");
+            var brand_namePattern = /^[A-Z0-9][a-zA-Z0-9]*$/;
     
-  
+            if (!brand_namePattern.test(brand_nameInput.value)) {
+                alert("Please enter a valid brand name. The first letter must be a capital letter, and only numbers and letters are allowed.");
+                brand_nameInput.value = ""; // Clear the input field
+                return false;
+            } else {
+                brand_nameError.textContent = '';
+                return true;
+            }
+        }
+
+        function validatePhone() {
+            var phoneInput = document.getElementById("phone");
+            var phoneError = document.getElementById("phoneError");
+            var phonePattern = /^\d{0,10}$/;
+    
+            if (!phonePattern.test(phoneInput.value)) {
+                alert("Please enter a valid phone number with only 10 digits.");
+                phoneInput.value = phoneInput.value.slice(0, -1); // Remove the last character entered
+                return false;
+            } else {
+                phoneError.textContent = '';
+                return true;
+            }
+        }
+        function validatePassword() {
+            const passwordInput = document.getElementById('password');
+            const passwordError = document.getElementById('passwordError');
+            const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+
+            if (!passwordPattern.test(passwordInput.value)) {
+                passwordError.textContent = 'Password must contain at least one uppercase letter, one digit, and one special character (!@#$%^&*).';
+            } else {
+                passwordError.textContent = '';
+            }
+        }
+        
+        
+        
+            function validatedate() {
+                var registration_dateInput = document.getElementById("registration_date");
+                var registration_dateError = document.getElementById("registration_dateError");
+                
+                var today = new Date();
+                var dd = String(today.getDate()).padStart(2, '0');
+                var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+                var yyyy = today.getFullYear();
+                var currentDate = yyyy + '-' + mm + '-' + dd;
+        
+                if (registration_dateInput.value !== currentDate) {
+                    alert("Please enter the current date only for registration.");
+                    registration_dateInput.value = currentDate; // Set the input field to the current date
+                    return false;
+                } else {
+                    registration_dateError.textContent = '';
+                    return true;
+                }
+            }
+        </script>
+        
+
+
+
+
+
+
+
+    </script>

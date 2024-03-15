@@ -1,5 +1,5 @@
 
-{% load static %}
+<{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -172,14 +172,17 @@
                         <br>
                         <br>
                          <input type="file" placeholder="profile picture" name="pictures" id="picture" class="input-box" > 
+
                         {% comment %} <span id="specializationError" class="error"></span> {% endcomment %}
                         <br>
                         <input type="password" placeholder="Password" name="password" id="password" oninput="validatePassword()" required>
                         <span id="passwordError" class="error"></span>
                         <br>
-                        <!--input type="password" placeholder="Confirm Password" name="confirmPassword" oninput="validateConfirmPassword()">
-                        <span id="confirmPasswordError" class="error"></span>
-                        <br>-->
+                    
+
+
+
+                        
                         <a href="{% url "login_fun_page" %}"><button type="submit">REGISTER</button></a><br>
                         <p>Already have an account? <a href="{% url 'login_fun_page' %}">Login</a></p>
                     </div>
