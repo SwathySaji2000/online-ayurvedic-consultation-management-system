@@ -1,0 +1,283 @@
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        /* Your CSS styles for cart page */
+
+        .cart-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .cart-item img {
+            max-width: 100px;
+            height: auto;
+            float: left;
+            margin-right: 10px;
+        }
+
+        .cart-item-details {
+            overflow: hidden;
+        }
+
+        .cart-item-details h3 {
+            margin-top: 0;
+        }
+
+        .cart-item-details p {
+            margin: 5px 0;
+        }
+
+        .cart-item-actions {
+            margin-top: 10px;
+        }
+
+        .cart-item-actions button {
+            margin-right: 5px;
+        }
+
+        .checkout-btn {
+            display: block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .checkout-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Cart</h1>
+    <div class="cart-items">
+        {% for cart_item in cart_items %}
+        <div class="cart-item">
+            <img src="{{ cart_item.product.product_image.url }}" alt="{{ cart_item.product.name }}">
+            <div class="cart-item-details">
+                <h3>{{ cart_item.product.name }}</h3>
+                <p><strong>Ingredients:</strong> {{ cart_item.product.ingredients }}</p>
+                <p><strong>Quantity Available:</strong> {{ cart_item.product.quantity_available }}</p>
+                <p><strong>Price:</strong> ₹{{ cart_item.product.price }}</p>
+                <p><strong>Discount:</strong> {{ cart_item.product.discount }}</p>
+                <p><strong>Usage Instructions:</strong> {{ cart_item.product.usage_instructions }}</p>
+                <p><strong>Expiry Date:</strong> {{ cart_item.product.expiry_date }}</p>
+                <p><strong>Manufacturer:</strong> {{ cart_item.product.manufacturer }}</p>
+                <!-- Add more product details as needed -->
+            </div>
+            <div class="cart-item-actions">
+                <form action="{% url 'increase_cart_item' cart_item.product.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">+</button>
+                </form>
+                <form action="{% url 'decrease_cart_item' cart_item.product.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">-</button>
+                </form>
+                <form action="{% url 'remove_from_cart' cart_item.product.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Remove</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <a href="{% url 'checkout' %}" class="checkout-btn">Proceed to Checkout</a>
+</body>
+</html>
+ {% endcomment %}
+<html>
+    <head>
+        <style>
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #f4f4f4;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            
+            .cart-header {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            
+            .cart-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px;
+                border-bottom: 1px solid #ddd;
+            }
+            
+            .cart-item-details {
+                display: flex;
+                align-items: center;
+            }
+            
+            .cart-item-name {
+                font-weight: bold;
+                margin-right: 10px;
+                flex: 1;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            
+            .remove-from-cart-btn,
+            .quantity-btn {
+                background-color: #ff6347;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                padding: 5px 10px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+            
+            .remove-from-cart-btn:hover,
+            .quantity-btn:hover {
+                background-color: #e74c3c;
+            }
+            
+            .cart-item-quantity {
+                display: flex;
+                align-items: center;
+                margin-right: 10px;
+            }
+            
+            .cart-item-price {
+                font-weight: bold;
+            }
+            
+            .continue-shopping-link {
+                display: inline-block;
+                margin-top: 20px;
+                text-decoration: none;
+                color: #3498db;
+                font-weight: bold;
+            }
+            
+            .continue-shopping-link:hover {
+                text-decoration: underline;
+            }
+            
+            .checkout-button {
+                display: inline-block;
+                background-color: #28a745; 
+                color: white;
+                padding: 10px 20px;
+                border-radius: 4px;
+                margin-top: 20px;
+                margin-left: 400px;
+                text-decoration: none;
+                font-weight: bold;
+                transition: background-color 0.3s;
+            }
+            
+            .checkout-button:hover {
+                background-color: #218838;
+            }
+        </style>
+    </head>
+
+ <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+<div class="container">
+    <div class="cart-header">
+        <h1>Your Cart</h1>
+    </div>
+    <ul>
+        {% for item in cart_items %}
+        <li class="cart-item">
+            <div class="cart-item-details">
+                <div class="cart-item-name">{{ item.product.name }}</div>
+                <form action="{% url 'remove-from-cart' item.product.id %}" method="post">
+                    {% csrf_token %}
+                    <button class="remove-from-cart-btn" type="submit">Remove</button>
+                </form>
+            </div>
+            <div class="cart-item-quantity">
+                <form action="{% url 'increase-cart-item' item.product.id %}" method="post">
+                    {% csrf_token %}
+                    <button class="quantity-btn increase-quantity" type="submit">+</button>
+                </form>
+                <span class="item-quantity">{{ item.quantity }}</span>
+                <form action="{% url 'decrease-cart-item' item.product.id %}" method="post">
+                    {% csrf_token %}
+                    <button class="quantity-btn decrease-quantity" type="submit">-</button>
+                </form>
+            </div>
+            <div class="cart-item-price" data-price="{{ item.product.price }}">
+                ${{ item.product.price }}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    <a class="continue-shopping-link" href="{% url 'product-list' %}">Continue Shopping</a>
+
+    <a class="checkout-button" href="#">Checkout</a>
+</div>
+<script>
+    function updateCartCount() {
+        var cartCount = document.querySelector('.cart-count');
+        fetch('{% url "fetch-cart-count" %}')
+            .then(response => response.json())
+            .then(data => {
+                cartCount.textContent = data.cart_count;
+            });
+    }
+    
+    updateCartCount();
+
+    const increaseButtons = document.querySelectorAll(".increase-quantity");
+const decreaseButtons = document.querySelectorAll(".decrease-quantity");
+const quantityElements = document.querySelectorAll(".item-quantity");
+const priceElements = document.querySelectorAll(".cart-item-price");
+
+increaseButtons.forEach((button, index) => {
+    button.addEventListener("click", (event) => {
+        event.preventDefault();
+        const currentItem = event.target.closest(".cart-item");
+        const quantityElement = currentItem.querySelector(".item-quantity");
+        const priceElement = currentItem.querySelector(".cart-item-price");
+        const pricePerItem = parseFloat(priceElement.getAttribute("data-price"));
+        const currentQuantity = parseInt(quantityElement.textContent);
+
+        quantityElement.textContent = currentQuantity + 1;
+        updateCartItemPrice(priceElement, pricePerItem, currentQuantity + 1);
+    });
+});
+
+decreaseButtons.forEach((button, index) => {
+    button.addEventListener("click", (event) => {
+        event.preventDefault();
+        const currentItem = event.target.closest(".cart-item");
+        const quantityElement = currentItem.querySelector(".item-quantity");
+        const priceElement = currentItem.querySelector(".cart-item-price");
+        const pricePerItem = parseFloat(priceElement.getAttribute("data-price"));
+        const currentQuantity = parseInt(quantityElement.textContent);
+
+        if (currentQuantity > 1) {
+            quantityElement.textContent = currentQuantity - 1;
+            updateCartItemPrice(priceElement, pricePerItem, currentQuantity - 1);
+        }
+    });
+});
+
+function updateCartItemPrice(priceElement, pricePerItem, quantity) {
+    const totalPrice = (pricePerItem * quantity).toFixed(2);
+    priceElement.textContent = "$" + totalPrice;
+}
+</script>
