@@ -11,11 +11,14 @@ from django.core.files.storage import FileSystemStorage
 # from django.core.mail import send_mail
 # from django.conf import Settings
 from django.core.mail import send_mail
+from django.http import HttpResponseServerError
+from django.contrib.auth.decorators import login_required
+
 from django.conf import settings
 from .models import Category
 from .models import Subcategory
-from .models import Product
-
+from .models import Product,CartItem,Cart
+from django.views.decorators.cache import *
 
 def new_password(request):
     request.session['lid']
@@ -597,7 +600,7 @@ def category_product(request):
         cat.name = categoryName
         cat.save()  
         return redirect('sub_category') 
-    categories = Category.objects.all()
+    categories = Category.objects.filter(name__in=["AYURVEDIC ARISHTAS & ASAVAS", "HOMEOPATHIC REMEDIES", "AYURVEDIC CHOORNAS & POWDERS"])
     context = {
         "categories": categories,
     }
@@ -605,17 +608,17 @@ def category_product(request):
     
 from django.shortcuts import redirect, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
-
 def delete_category(request, category_id):
     if request.method == 'POST':
         try:
             category = get_object_or_404(Category, id=category_id)
             category.delete()
             messages.success(request, 'Category deleted successfully')
-        except ObjectDoesNotExist:
+        except Category.DoesNotExist:
             messages.error(request, 'Category not found')
-    
-    return HttpResponse("<script>alert('deleted successfully');window.location='/seller_index'</script>")     
+    # Redirect to category_product view after deleting the category
+    return redirect('seller_index')
+    #return HttpResponse("<script>alert('deleted successfully');window.location='/seller_index'</script>")     
 
 
 
@@ -708,5 +711,346 @@ def product_list(request):
 
 def added_products(request):
      # Fetch all added products
-     products = Product.objects.all()
-     return render(request, 'added_product.html', {'products': products})    
+    products = Product.objects.all()
+     
+    return render(request, 'added_product.html', {'products': products})      
+
+from django.shortcuts import render, get_object_or_404
+def update_product_details(request,product_id):
+    product = get_object_or_404(Product, id=product_id)
+    if request.method == "POST":
+        # Update product details based on the POST data
+        product.name = request.POST['productname']
+        product.description = request.POST['productdescription']
+        product.price = request.POST['productprice']
+        product.discount = request.POST['productdiscount']
+        product.quantity_available = request.POST['productquantityavailable']
+        product.ingredients = request.POST['productingredients']
+        product.usage_instructions = request.POST['productusageinstructions']
+        product.certifications = request.FILES.get('productcertificate')
+        product.expiry_date = request.POST['productexpirydate']
+        product.manufacturer = request.POST['productmanufacturer']
+        product.category_id = request.POST.get('category')  # corrected method
+        product.subcategory_id = request.POST.get('subcategory')  # corrected method
+        product.seller_id = request.POST.get('seller')  # corrected method
+        product.product_image = request.FILES.get('product_image')
+        product.save()
+        return render(request, 'seller_index.html')  # Redirect to a success page or any other desired page
+    else:
+        # Render the edit product form with the product details
+        categories = Category.objects.all()  # Assuming you have a Category model
+        subcategories = Subcategory.objects.all()  # Assuming you have a Subcategory model
+        sellers = Seller.objects.all()  # Assuming you have a Seller model
+        return render(request, 'edit_product.html', {'product': product, 'categories': categories, 'subcategories': subcategories, 'sellers': sellers})
+    
+def delete_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    product.delete()
+    return redirect('category') 
+
+def search_products(request):
+    query = request.GET.get('query')
+    category_id = request.GET.get('category')
+    products = Product.objects.all()
+    categories = Category.objects.all()
+    
+    if query:
+        products = products.filter(name__icontains=query)
+    if category_id:
+        products = products.filter(category_id=category_id)
+    
+    context = {
+        "products": products,
+        "categories": categories,
+    }
+    return render(request, 'added_product.html', context)
+
+
+from django.shortcuts import render
+from .models import Product
+
+def patient_product_list(request):
+    products = Product.objects.all()  # Retrieve all products
+    return render(request, 'patient_product_list.html', {'products': products})
+
+# @login_required(login_url='login_fun_page')
+# def add_to_cart(request, product_id):
+#     product = get_object_or_404(Product, pk=product_id)
+#     if request.method == 'POST':
+#         quantity = int(request.POST.get('quantity', 1))
+#         cart, created = Cart.objects.get_or_create(user=request.user)
+#         cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+#         cart_item.quantity += quantity
+#         cart_item.save()
+#         return redirect('cart')
+#     return redirect('product_detail', product_id=product_id)
+
+from django.contrib.auth.decorators import login_required
+
+
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from .models import Product, Cart, CartItem
+
+@login_required
+def add_to_cart(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    if request.method == 'POST':
+        quantity = int(request.POST.get('quantity', 1))
+        if quantity <= 0:
+            # Redirect or display a message indicating invalid quantity
+            return redirect('product_detail', product_id=product_id)
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        # Check if the product already exists in the cart
+        cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+        # If the product already exists, update the quantity
+        if not created:
+            cart_item.quantity += quantity
+        else:
+            cart_item.quantity = quantity
+        cart_item.save()
+        return redirect('cart')
+    else:
+        if request.user.is_authenticated:
+            # User is authenticated, redirect to the login page with the next parameter
+            return redirect('login_fun_page', next=request.path)
+        else:
+            # User is not authenticated, render a template indicating login is required
+            return render(request, 'patient_imdex.html')
+
+
+
+
+
+@login_required(login_url='login_fun_page')
+def remove_from_cart(request, product_id):
+    product = Product.objects.get(pk=product_id)
+    cart = Cart.objects.get(user=request.user)
+    try:
+        cart_item = cart.cartitem_set.get(product=product)
+        if cart_item.quantity >= 1:
+             cart_item.delete()
+    except CartItem.DoesNotExist:
+        pass
+    
+    return redirect('cart')
+
+
+@login_required(login_url='login_fun_page')
+def view_cart(request):
+    cart = request.user.cart
+    cart_items = CartItem.objects.filter(cart=cart)
+    return render(request, 'cart.html', {'cart_items': cart_items})
+
+@login_required(login_url='login_fun_page')
+def increase_cart_item(request, product_id):
+    product = Product.objects.get(pk=product_id)
+    cart = request.user.cart
+    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+
+    cart_item.quantity += 1
+    cart_item.save()
+
+    return redirect('cart')
+
+@login_required(login_url='login_fun_page')
+def decrease_cart_item(request, product_id):
+    product = Product.objects.get(pk=product_id)
+    cart = request.user.cart
+    cart_item = cart.cartitem_set.get(product=product)
+
+    if cart_item.quantity > 1:
+        cart_item.quantity -= 1
+        cart_item.save()
+    else:
+        cart_item.delete()
+
+    return redirect('cart')
+
+@login_required(login_url='login_fun_page')
+def fetch_cart_count(request):
+    cart_count = 0
+    if request.user.is_authenticated:
+        cart = request.user.cart
+        cart_count = CartItem.objects.filter(cart=cart).count()
+    return JsonResponse({'cart_count': cart_count})
+
+
+
+
+def get_cart_count(request):
+    if request.user.is_authenticated:
+        cart_items = CartItem.objects.filter(cart=request.user.cart)
+        cart_count = cart_items.count()
+    else:
+        cart_count = 0
+    return cart_count
+
+
+
+def checkout(request, product_id):
+    # Retrieve the product based on the provided product_id
+    try:
+        product = Product.objects.get(id=product_id)
+    except Product.DoesNotExist:
+        messages.error(request, "Product not found.")
+        return redirect('patient_index')  # Redirect to home page or any other appropriate URL
+    
+    # Perform checkout logic here, such as processing payment, updating inventory, etc.
+    
+    messages.success(request, f"Checkout successful! Thank you for your purchase of {product.name}.")
+    return redirect('checkout.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# @login_required(login_url='login_fun_page')
+
+# def add_to_cart(request, product_id):
+#     if request.user.is_authenticated:
+#         product = Product.objects.get(id=product_id)
+#         cart, created = Cart.objects.get_or_create(user=request.user)
+#         cart.items.add(product)
+#         messages.success(request, f"{product.name} added to cart successfully.")
+#         # Retrieve all cart items including the newly added product
+#         cart_items = cart.items.all()
+#         context = {
+#             'cart_items': cart_items,
+#             'product_added': product  # Pass the product added to the cart for display on cart page
+#         }
+#         return render(request, 'cart.html', context)  # Render cart page with updated cart items and product details
+#     else:
+#         messages.error(request, "You need to be logged in to add items to the cart.")
+#         return redirect('cart')
+    
+# def remove_from_cart(request, product_id):
+#     product = Product.objects.get(pk=product_id)
+#     cart = Cart.objects.get(user=request.user)
+#     try:
+#         cart_item = cart.cartitem_set.get(product=product)
+#         if cart_item.quantity >= 1:
+#              cart_item.delete()
+#     except CartItem.DoesNotExist:
+#         pass
+    
+#     return redirect('cart')
+
+
+# def cart_view(request):
+#     # Assuming you have a Cart model associated with the user
+#     if hasattr(request.user, 'cart'):
+#         cart_items = request.user.cart.items.all()
+#     else:
+#         # If the user is anonymous or doesn't have a cart, handle accordingly
+#         cart_items = []
+
+#     context = {
+#         'cart_items': cart_items
+#     }
+#     return render(request, 'cart.html', context)
+
+
+
+# def increase_cart_item(request, product_id):
+#     product = Product.objects.get(pk=product_id)
+#     cart = request.user.cart
+#     cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+
+#     cart_item.quantity += 1
+#     cart_item.save()
+
+#     return redirect('cart')
+
+
+# def decrease_cart_item(request, product_id):
+#     product = Product.objects.get(pk=product_id)
+#     cart = request.user.cart
+#     cart_item = cart.cartitem_set.get(product=product)
+
+#     if cart_item.quantity > 1:
+#         cart_item.quantity -= 1
+#         cart_item.save()
+#     else:
+#         cart_item.delete()
+
+#     return redirect('cart')   
+
+
+# def add_to_wishlist(request, product_id):
+#     # Add logic to add the product to the wishlist
+#     # For example:
+#     if request.method == 'POST':
+#         # Logic to add the product to the wishlist
+#         return HttpResponse("Product added to wishlist successfully!")  
+
+# def checkout_view(request):
+#     if request.method == 'POST':
+#         # Process the form data here (e.g., save to database)
+#         # Redirect to a thank you page or order summary page
+#         return render(request, 'thank_you.html')  # Example: thank_you.html is the template for the thank you page
+#     else:
+#         return render(request, 'checkout.html')     
+
+# def purchase(request):
+#     if request.method == 'POST':
+#         cart = Cart.objects.get(user=request.user)
+#         cart_items = cart.items.all()
+#         for cart_item in cart_items:
+#             product = cart_item.product
+#             quantity_purchased = cart_item.quantity
+#             if product.quantity_available < quantity_purchased:
+#                 messages.error(request, f"Not enough quantity available for {product.name}.")
+#                 return redirect('cart')
+#             product.quantity_available -= quantity_purchased
+#             product.save()
+#         # Process payment and create order
+#         # Clear the cart after successful purchase
+#         cart.items.clear()
+#         messages.success(request, "Purchase successful. Your order has been placed.")
+#         return redirect('home')  # Redirect to home page or order confirmation page
+#     else:
+#         return redirect('cart')
