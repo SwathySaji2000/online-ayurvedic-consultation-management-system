@@ -1,0 +1,32 @@
+{% include 'user_header.html'%}
+<br><br><br><br><br><br>
+    <center>
+                
+        <h1>Bookings Details</h1>
+            <table class="table" style="width: 900px;" border="5">
+
+               
+                        <tr>
+                            <th>SL.NO</th>
+                            <th>Product Name</th>
+                            <th>Image</th>
+                            <th>quantity</th>
+                            <th>Amount</th>
+                        </tr>
+                            {% for i in q %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{i.product.name}}</td>
+                            <td><img src="{{ i.product.product_image.url }}" alt="{{ product.name }}" height="200" width="200" alt="" /></td>
+                            <td>{{i.quantity}}</td>
+                            <td>{{i.book_amount}}</td>  
+                        </tr>
+                            {% endfor %}
+                
+                        
+                    </table>
+            
+</center>
+</table>
+        
+  {% include "footer.html" %}

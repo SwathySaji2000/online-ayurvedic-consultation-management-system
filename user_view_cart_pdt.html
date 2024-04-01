@@ -1,0 +1,41 @@
+{% include 'user_header.html'%}
+
+<br><br><br><br><br><br>
+<center>
+
+            <table class="table" style="width: 900px;" border="5">
+       
+                <h1>Cart</h1>
+           
+                <tr>
+                    <th>SL.NO</th>
+                    <th>Customer</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Total</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+                    {% for row in q %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{row.user.FullName }}</td>
+                    <td>{{row.user.email}}</td>
+                    <td>{{row.user.phone}}</td>
+                    <td>{{row.p_amount}}</td>
+                    <td>{{row.p_date}}</td>
+                    <td><a class="btn btn-primary" href="/user_view_cartdetailspdt/{{row.id}}">Booking Details</a></td>
+                   <!-- <td> <a class="btn btn-success" href="/admin_view_payments/{{row.id}}">View Payment</a></td> -->
+                    {% if row.p_status == "pending" %}
+                    <td><a class="btn btn-warning" href="/user_make_payment_pdt/{{row.pid}}/{{row.p_amount}}">Make Payment</a></td>
+                    
+                    {% endif %}
+        
+                </tr>
+                    {% endfor %}
+            </table>
+            
+
+
+
+{% include 'footer.html'%}

@@ -1,0 +1,50 @@
+{% include 'user_header.html'  %} 
+
+  
+             
+                <script type="text/javascript">
+                    function TextOnTextChange()
+                    {
+                        var x =document.getElementById("p_amount").value;
+                        var y =document.getElementById("p_qnty").value;
+                        document.getElementById("t_amount").value = x * y;
+                    }
+                
+                </script>           
+                                        <center>
+ 
+ <h1> <span>ADD TO CART</span></h1>
+              <p>
+  
+  
+  
+                    <form method="post">
+                        {% csrf_token %}
+                            <h3 style="color: black"></h3>
+                            <table class="table" style="width: 700px;color:black" border="5">
+                            <tr>
+                                    <td><h5>Item Name  : {{products}}</h5><br></td>
+                                </tr> 
+                                <tr>
+                                    <th>Quantity </th>
+                                    <td><input type="number" required="" class="form-control" min="1" max="10"  name="qty" id="p_qnty" onchange="TextOnTextChange()"></td>
+                                </tr>
+                                <tr>
+                                    <th>Amount</th>
+                                    <td><input type="text" required="" value={{amount}} readonly class="form-control"  name="amount" id="p_amount"></td>
+                                </tr>
+                                <tr>
+                                    <th>Total</th>
+                                    <td><input type="text" readonly="" required="" class="form-control"  name="total"  id="t_amount"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" align="center"><input class="btn btn-info" type="submit" name="submit" value="ADD"></td>
+                                </tr>
+                    
+                            </table>
+                        </center>
+                    </form>
+    
+
+
+{% include 'footer.html'  %}
