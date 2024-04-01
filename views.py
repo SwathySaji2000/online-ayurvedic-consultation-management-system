@@ -17,7 +17,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from .models import Category
 from .models import Subcategory
-from .models import Product,CartItem,Cart
+from .models import Product
 from django.views.decorators.cache import *
 
 def new_password(request):
@@ -350,13 +350,6 @@ def schedule_doctor(request):
     sc.save()
     return HttpResponse("<script>alert('Booking successfully');window.location='/schedule_doctor'</script>") 
  return render(request, "landingpage.html")
-
-
-
-
-
-
-
 
 
 def adminmanage_user(request):
@@ -773,6 +766,222 @@ def patient_product_list(request):
     products = Product.objects.all()  # Retrieve all products
     return render(request, 'patient_product_list.html', {'products': products})
 
+
+
+def user_add_product_to_carts1(request,pid,pname,rate,quantity):
+
+    today=date.today()
+    print(today)
+
+    lid=request.session['id']
+
+    c=Users.objects.filter(LOGIN_id=lid)
+    if c:
+        cid=c[0].id 
+        print(cid)
+
+
+    if request.method=="POST":
+        qty=request.POST['qty']
+        amount=request.POST['amount']
+        ttotal=request.POST['total']
+
+        if int(qty)<=int(quantity):
+            print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+            q=P_booking.objects.filter(user_id=cid,p_status='pending')
+            if q:
+                oid=q[0].id
+                total=q[0].p_amount
+                print("omaster_id...............",oid)
+                print("total...............",total)
+
+                q2=P_bookingchild.objects.filter(P_booking_id=oid,product_id=pid)
+                if q2:
+                    od_id=q2[0].id
+                    t_qty=q2[0].quantity 
+                    t_amt=q2[0].book_amount
+                    print("odetail_id......",od_id)
+                    print("t_qty........",t_qty)
+                    print("t_amt........",t_amt)
+
+                    c=int(t_qty)+int(qty)
+
+                    if int(c)>int(quantity):
+                        return HttpResponse("<script>alert('OUT OF STOCK');window.location='/patient_product_list';</script>")
+                    
+                    else:
+                        oup=P_bookingchild.objects.get(id=od_id)
+                        oup.book_amount=int(t_amt)+int(ttotal)
+                        oup.quantity=int(t_qty)+int(qty)
+                        oup.save()
+
+                        up=P_booking.objects.get(id=oid)
+                        up.p_amount=int(total)+int(ttotal)
+                        up.save() 
+                else:
+                    q3=P_bookingchild(book_amount=ttotal,quantity=qty,P_booking_id=oid,product_id=pid)
+                    q3.save()
+                    up1=P_booking.objects.get(id=oid)
+                    up1.p_amount=int(total)+int(ttotal)
+                    up1.save()
+                    return HttpResponse("<script>alert('ADD TO CART....!!');window.location='/patient_product_list';</script>")
+            
+            else:
+                oid=P_booking(p_amount=ttotal,p_date=today,p_status='pending',user_id=cid)
+                oid.save()
+                q3=P_bookingchild(book_amount=ttotal,quantity=qty,P_booking_id=oid,product_id=pid)
+                q3.save()
+                pid = int(pid)
+                return HttpResponse("<script>alert('ADD TO CART....!!');window.location='/patient_product_list';</script>")
+           
+        else:
+            return HttpResponse("<script>alert('Enter Less Quantity....!!');window.location='/patient_product_list';</script>")
+    
+    ss={}
+    
+    ss['products']=pname
+    ss['amount']=rate
+    return render(request,'user_add_product_to_carts1.html',ss)
+
+def user_view_cart_pdt(request):
+    sid=request.session['uid']
+    q=P_booking.objects.filter(user_id=sid,p_status='pending').order_by('-id')
+    if q:
+        status=q[0].p_status
+        if status == "paid":
+            return HttpResponse("<script>alert('cart is empty....!!');window.location='/patient_index/';</script>")
+    return render(request,'user_view_cart_pdt.html',{'q':q})
+
+
+def user_view_cartdetailspdt(request,id):
+    q=P_bookingchild.objects.filter(P_booking_id=id)
+    return render(request,'user_view_cartdetailspdt.html',{'q':q})
+
+
+# def user_make_payment_pdt(request,id,total):
+#     today=date.today()
+#     print(today)
+  
+#     if request.method=="POST":
+#         q=pdt_payment(pdt_amount=total,pdt_date=today,booking_id=id)
+#         q.save()
+
+#         q1=booking.objects.get(booking_id=id)
+#         q1.book_status='paid'
+#         q1.save()    
+#         return HttpResponse("<script>alert('Payment Completed....!!!');window.location='/userhome';</script>")
+#     return render(request,'user_make_payment_pdt.html',{'total':total})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # @login_required(login_url='login_fun_page')
 # def add_to_cart(request, product_id):
 #     product = get_object_or_404(Product, pk=product_id)
@@ -785,121 +994,123 @@ def patient_product_list(request):
 #         return redirect('cart')
 #     return redirect('product_detail', product_id=product_id)
 
-from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.decorators import login_required
 
 
-from django.shortcuts import get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from .models import Product, Cart, CartItem
+# from django.shortcuts import get_object_or_404, redirect
+# from django.contrib.auth.decorators import login_required
+# from .models import Product, Cart, CartItem
 
-@login_required
-def add_to_cart(request, product_id):
-    product = get_object_or_404(Product, pk=product_id)
-    if request.method == 'POST':
-        quantity = int(request.POST.get('quantity', 1))
-        if quantity <= 0:
-            # Redirect or display a message indicating invalid quantity
-            return redirect('product_detail', product_id=product_id)
-        cart, created = Cart.objects.get_or_create(user=request.user)
-        # Check if the product already exists in the cart
-        cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
-        # If the product already exists, update the quantity
-        if not created:
-            cart_item.quantity += quantity
-        else:
-            cart_item.quantity = quantity
-        cart_item.save()
-        return redirect('cart')
-    else:
-        if request.user.is_authenticated:
-            # User is authenticated, redirect to the login page with the next parameter
-            return redirect('login_fun_page', next=request.path)
-        else:
-            # User is not authenticated, render a template indicating login is required
-            return render(request, 'patient_imdex.html')
+# @login_required
+# def add_to_cart(request, product_id):
+#     product = get_object_or_404(Product, pk=product_id)
+#     if request.method == 'POST':
+#         quantity = int(request.POST.get('quantity', 1))
+#         if quantity <= 0:
+#             # Redirect or display a message indicating invalid quantity
+#             return redirect('product_detail', product_id=product_id)
+        
+        # Check if user is authenticated
+    #     if request.user.is_authenticated:
+    #         # User is authenticated, proceed with adding product to cart
+    #         cart, created = Cart.objects.get_or_create(user=request.user)
+    #         # Check if the product already exists in the cart
+    #         cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+    #         # If the product already exists, update the quantity
+    #         if not created:
+    #             cart_item.quantity += quantity
+    #         else:
+    #             cart_item.quantity = quantity
+    #         cart_item.save()
+    #         return redirect('cart')
+    #     else:
+    #         # User is not authenticated, handle the case accordingly
+    #         # For example, you can redirect them to the login page with a next parameter
+    #         return redirect('login_fun_page', next=request.path)
+
+    # else:
+    #     # If request method is not POST, handle it accordingly
+    #     return redirect('product_detail', product_id=product_id)
 
 
-
-
-
-@login_required(login_url='login_fun_page')
-def remove_from_cart(request, product_id):
-    product = Product.objects.get(pk=product_id)
-    cart = Cart.objects.get(user=request.user)
-    try:
-        cart_item = cart.cartitem_set.get(product=product)
-        if cart_item.quantity >= 1:
-             cart_item.delete()
-    except CartItem.DoesNotExist:
-        pass
+# @login_required(login_url='login_fun_page')
+# def remove_from_cart(request, product_id):
+#     product = Product.objects.get(pk=product_id)
+#     cart = Cart.objects.get(user=request.user)
+#     try:
+#         cart_item = cart.cartitem_set.get(product=product)
+#         if cart_item.quantity >= 1:
+#              cart_item.delete()
+#     except CartItem.DoesNotExist:
+#         pass
     
-    return redirect('cart')
+#     return redirect('cart')
 
 
-@login_required(login_url='login_fun_page')
-def view_cart(request):
-    cart = request.user.cart
-    cart_items = CartItem.objects.filter(cart=cart)
-    return render(request, 'cart.html', {'cart_items': cart_items})
+# @login_required(login_url='login_fun_page')
+# def view_cart(request):
+#     cart = request.user.cart
+#     cart_items = CartItem.objects.filter(cart=cart)
+#     return render(request, 'cart.html', {'cart_items': cart_items})
 
-@login_required(login_url='login_fun_page')
-def increase_cart_item(request, product_id):
-    product = Product.objects.get(pk=product_id)
-    cart = request.user.cart
-    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+# @login_required(login_url='login_fun_page')
+# def increase_cart_item(request, product_id):
+#     product = Product.objects.get(pk=product_id)
+#     cart = request.user.cart
+#     cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
 
-    cart_item.quantity += 1
-    cart_item.save()
+#     cart_item.quantity += 1
+#     cart_item.save()
 
-    return redirect('cart')
+#     return redirect('cart')
 
-@login_required(login_url='login_fun_page')
-def decrease_cart_item(request, product_id):
-    product = Product.objects.get(pk=product_id)
-    cart = request.user.cart
-    cart_item = cart.cartitem_set.get(product=product)
+# @login_required(login_url='login_fun_page')
+# def decrease_cart_item(request, product_id):
+#     product = Product.objects.get(pk=product_id)
+#     cart = request.user.cart
+#     cart_item = cart.cartitem_set.get(product=product)
 
-    if cart_item.quantity > 1:
-        cart_item.quantity -= 1
-        cart_item.save()
-    else:
-        cart_item.delete()
+#     if cart_item.quantity > 1:
+#         cart_item.quantity -= 1
+#         cart_item.save()
+#     else:
+#         cart_item.delete()
 
-    return redirect('cart')
+#     return redirect('cart')
 
-@login_required(login_url='login_fun_page')
-def fetch_cart_count(request):
-    cart_count = 0
-    if request.user.is_authenticated:
-        cart = request.user.cart
-        cart_count = CartItem.objects.filter(cart=cart).count()
-    return JsonResponse({'cart_count': cart_count})
-
-
-
-
-def get_cart_count(request):
-    if request.user.is_authenticated:
-        cart_items = CartItem.objects.filter(cart=request.user.cart)
-        cart_count = cart_items.count()
-    else:
-        cart_count = 0
-    return cart_count
+# @login_required(login_url='login_fun_page')
+# def fetch_cart_count(request):
+#     cart_count = 0
+#     if request.user.is_authenticated:
+#         cart = request.user.cart
+#         cart_count = CartItem.objects.filter(cart=cart).count()
+#     return JsonResponse({'cart_count': cart_count})
 
 
 
-def checkout(request, product_id):
-    # Retrieve the product based on the provided product_id
-    try:
-        product = Product.objects.get(id=product_id)
-    except Product.DoesNotExist:
-        messages.error(request, "Product not found.")
-        return redirect('patient_index')  # Redirect to home page or any other appropriate URL
+
+# def get_cart_count(request):
+#     if request.user.is_authenticated:
+#         cart_items = CartItem.objects.filter(cart=request.user.cart)
+#         cart_count = cart_items.count()
+#     else:
+#         cart_count = 0
+#     return cart_count
+
+
+
+# def checkout(request, product_id):
+#     # Retrieve the product based on the provided product_id
+#     try:
+#         product = Product.objects.get(id=product_id)
+#     except Product.DoesNotExist:
+#         messages.error(request, "Product not found.")
+#         return redirect('patient_index')  # Redirect to home page or any other appropriate URL
     
-    # Perform checkout logic here, such as processing payment, updating inventory, etc.
+#     # Perform checkout logic here, such as processing payment, updating inventory, etc.
     
-    messages.success(request, f"Checkout successful! Thank you for your purchase of {product.name}.")
-    return redirect('checkout.html')
+#     messages.success(request, f"Checkout successful! Thank you for your purchase of {product.name}.")
+#     return redirect('checkout.html')
 
 
 
