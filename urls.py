@@ -49,8 +49,7 @@ urlpatterns = [
    
 
     path('schedule/', views.schedule_form, name='schedule_form'),
-
-
+   
     
     path('view_slots/<doctor_id>/', views.view_slots, name='view_slots'),
     path('booking_doctor/<id>/', views.booking_doctor, name='booking_doctor'),
@@ -64,19 +63,64 @@ urlpatterns = [
     path('patient_profile',views.patient_profile, name='patient_profile'),
     path('doctor_profile',views.doctor_profile, name='doctor_profile'),
     
-    path('category_page/',views.category_product, name="category"),
+    path('category_page/', views.category_product, name="category_product"),
     path('delete_category/<int:category_id>/', views.delete_category, name='delete_category'),
     path('ayurproduct_list/',views. product_list, name='product_list'),
-     path('added_product/',views. added_products, name='product_display'),
-
+    path('added_product/',views. added_products, name='product_display'),
+    path('edit_product/<int:product_id>/', views.update_product_details, name='update_product'),
+    path('delete_product/<int:product_id>/', views.delete_product, name='delete_product'),  
+    
+    path('search_result/', views.search_products, name='search_products'),
+    
     path('add_subcategory/',views.sub_category,name="sub_category"),
     
+    # path('patient_product_list/', views.patient_product_list, name='patient_product_list'),
+   
+    path('patient_product_list/', views.patient_product_list, name='patient_product_list'),
+    path('user_add_product_to_carts1/<pid>/<pname>/<rate>/<quantity>',views.user_add_product_to_carts1),
+    path('user_view_cartdetailspdt/<id>',views.user_view_cartdetailspdt,name = 'user_view_cartdetails'),
+    path('user_view_cart_pdt/',views.user_view_cart_pdt, name='user_view_cart_pdt'),
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+    #path('add-to-cart/<int:product_id>/', views.add_to_cart, name='add-to-cart'),
+    # path('remove-from-cart/<int:product_id>/',views. remove_from_cart, name='remove-from-cart'),
+    # path('cart/',views.view_cart, name='cart'),
+    # path('increase-cart-item/<int:product_id>/', views.increase_cart_item, name='increase-cart-item'),
+    # path('decrease-cart-item/<int:product_id>/', views.decrease_cart_item, name='decrease-cart-item'),
+    #  path('checkout/<int:product_id>/', views.checkout, name='checkout'),
+
+
+    
+
+    
+    
+    
+    # path('add_to_cart/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
+    # path('checkout/', views.checkout_view, name='checkout'), 
+    # path('add-to-cart/<int:product_id>/', views.add_to_cart, name='add-to-cart'),
+    # path('remove-from-cart/<int:product_id>/', views.remove_from_cart, name='remove-from-cart'),
+    # path('cart/',views.cart_view, name='cart'),
+    # path('increase-cart-item/<int:product_id>/', views.increase_cart_item, name='increase-cart-item'),
+    # path('decrease-cart-item/<int:product_id>/', views.decrease_cart_item, name='decrease-cart-item'),
+    # path('checkout/', views.checkout_view, name='checkout'),
+    # path('product/<int:product_id>/add-to-wishlist/', views.add_to_wishlist, name='add-to-wishlist'),
+    # path('purchase/', views.purchase, name='purchase'),
+    # path('addtocart/<int:product_id>/', views.add_to_cart, name='add-to-cart'),
     path('logout/', views.logout_view, name='logout'),
 
 
