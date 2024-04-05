@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Booking</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Global styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 500px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        input[type="date"],
+        select {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="date"]:focus,
+        select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Style for select arrow */
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 24px;
+        }
+    </style>
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<body>
+    <div class="container">
+        <h1>Create Booking</h1>
+        <form method="post" id="bookingForm">
+            {% csrf_token %}
+            
+            <label for="room">Room:</label>
+            <select name="room" id="room">
+                <option value="">Select Room</option>
+                <option value="ac">AC</option>
+                <option value="non_ac">Non-AC</option>
+            </select>
+            
+            <label for="date_start">Date Start:</label>
+            <input type="date" name="date_start" id="date_start">
+            
+            <label for="treatment_type">Treatment Type:</label>
+            <select name="treatment_type" id="treatment_type">
+                <option value="">Select Treatment Type</option>
+                <option value="panchakarma">Panchakarma</option>
+                <option value="vamanan">Vamanan</option>
+                <option value="snehavasthy">Snehavasthy</option>
+                <option value="nasyam">Nasyam</option>
+                <option value="shirodhara">Shirodhara</option>
+                <option value="tharpanam">Tharpanam</option>
+                <option value="putapakam">Putapakam</option>
+            </select>
+            
+            <label for="food_plan">Food Plan:</label>
+            <select name="food_plan" id="food_plan">
+                <option value="">Select Food Plan</option>
+                <option value="regular">Regular</option>
+                <option value="vegetarian">Vegetarian</option>
+                <option value="vegan">Vegan</option>
+                <option value="gluten_free">Gluten-Free</option>
+            </select>
+            
+            <label for="number_of_days">Number of Days:</label>
+            <select name="number_of_days" id="number_of_days">
+                <option value="">Select Number of Days</option>
+                <option value="3">3 days</option>
+                <option value="5">5 days</option>
+                <option value="7">7 days</option>
+            </select>
+            
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
