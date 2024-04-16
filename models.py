@@ -122,3 +122,82 @@ class P_bookingchild(models.Model):
     book_amount = models.CharField(max_length=225)
     quantity = models.CharField(max_length=225)
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
+
+class Payment(models.Model):
+    P_booking = models.ForeignKey(P_booking,on_delete=models.CASCADE)
+    user = models.ForeignKey(Users,on_delete=models.CASCADE) 
+    date = models.CharField(max_length=2000,null=True)
+    py_status = models.CharField(max_length=225,null=True)
+
+
+class Room(models.Model):
+    ROOM_TYPE_CHOICES = [
+        ('ac', 'AC'),
+        ('non_ac', 'Non-AC'),
+    ]
+
+    name = models.CharField(max_length=100)
+    room_type = models.CharField(max_length=20, choices=ROOM_TYPE_CHOICES)
+
+    def __str__(self):
+        return self.name
+
+class Bookings(models.Model):
+    TREATMENT_CHOICES = [
+        ('panchakarma', 'Panchakarma'),
+        ('vamanan', 'Vamanan'),
+        ('snehavasthy', 'Snehavasthy'),
+        ('nasyam', 'Nasyam'),
+        ('shirodhara', 'Shirodhara'),
+        ('tharpanam', 'Tharpanam'),
+        ('putapakam', 'Putapakam'),
+        # Add more treatment options as needed
+    ]
+    FOOD_PLAN_CHOICES = [
+        ('regular', 'Regular'),
+        ('vegetarian', 'Vegetarian'),
+        ('vegan', 'Vegan'),
+        ('gluten_free', 'Gluten-Free'),
+        # Add more food plan options as needed
+    ]
+    NUMBER_OF_DAYS_CHOICES = [
+        (3, '3 days'),
+        (5, '5 days'),
+        (7, '7 days'),
+        # Add more number of days options as needed
+    ]
+    
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    date_start = models.DateField()
+    treatment_type = models.CharField(max_length=100, choices=TREATMENT_CHOICES)
+    food_plan = models.CharField(max_length=100, choices=FOOD_PLAN_CHOICES)
+    number_of_days = models.PositiveIntegerField(choices=NUMBER_OF_DAYS_CHOICES)
+    status = models.CharField(max_length=100, default='pending')
+    
+
+
+    def save(self, *args, **kwargs):
+        if not self.pk and self.room is None:
+            # Automatically allocate room based on the room type selected by the user
+            if self.room_type:
+                available_rooms = Room.objects.filter(room_type=self.room_type)
+                if available_rooms.exists():
+                    self.room = available_rooms.first()
+                else:
+                    # Handle case where no rooms of the selected type are available
+                    raise Exception("No available rooms of selected type")
+            else:
+                # Handle case where room_type is not provided
+                raise Exception("Room type is required")
+        super().save(*args, **kwargs)
+
+
+
+# class Paymentt(models.Model):
+#     amount = models.DecimalField(max_digits=10, decimal_places=2)
+#     timestamp = models.DateTimeField(auto_now_add=True)
+
+#     user = models.ForeignKey(Users, on_delete=models.CASCADE,default=True)
+
+#     def __str__(self):
+#         return f"Payment ID: {self.payment_id}, Amount: {self.amount}"

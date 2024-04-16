@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-3069!r-dh-4_ea1#sg#$!^n!w!0vwp67=2b&7za8teq$%7o$p$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -120,14 +120,37 @@ USE_L10N = True
 USE_TZ = True
 
 
+
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS=[BASE_DIR,'static']
-MEDIA_ROOT=[os.path.join(BASE_DIR,'static/')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
+MEDIA_ROOT=os.path.join(BASE_DIR,'static/')
+
+# https://docs.djangoproject.com/en/3.2/howto/static-files/
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'swathysaji143@gmail.com'
+EMAIL_HOST_PASSWORD = 'xrqkarutlvawpoba'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+RAZORPAY_KEY_ID = 'rzp_test_DMUK9SVlpwVfnB'
+RAZORPAY_KEY_SECRET = 'J91T4HYYFZj6foK1QPi4mPZ'
